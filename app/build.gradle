@@ -22,8 +22,12 @@ android {
     }
     buildTypes {
         release {
+            buildConfigField("Boolean", "LOGGER_VISIABLE", "false")
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            buildConfigField("Boolean", "LOGGER_VISIABLE", "true")
         }
     }
 }
@@ -53,5 +57,6 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:$version_glide"
     kapt "com.github.bumptech.glide:compiler:$version_glide"
     implementation "androidx.recyclerview:recyclerview:$version_recyclerview"
+    implementation("com.squareup.okhttp3:logging-interceptor:4.0.1")
 
 }

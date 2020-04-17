@@ -3,7 +3,9 @@
         xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="homeItem"
+            type="com.angela.lollipoptest.data.HomeItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
