@@ -1,5 +1,7 @@
 package com.angela.lollipoptest.data.source
 
+import com.angela.lollipoptest.data.HomeResult
+import com.angela.lollipoptest.data.Result
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
@@ -12,6 +14,8 @@ class LollipopDefaultRepository(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : LollipopRepository {
 
-
+    override suspend fun getHome(): Result<HomeResult> {
+        return lollipopRemoteDataSource.getHome()
+    }
 
 }

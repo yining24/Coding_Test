@@ -4,8 +4,14 @@
 
     <data>
         <variable
-            name="homeItem"
-            type="com.angela.lollipoptest.data.HomeItem" />
+            name="homeData"
+            type="com.angela.lollipoptest.data.HomeData" />
+        <variable
+            name="news"
+            type="com.angela.lollipoptest.data.News" />
+        <variable
+            name="newsResult"
+            type="com.angela.lollipoptest.data.NewsResult" />
 
     </data>
 
@@ -25,6 +31,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:imageUrl="@{news.image}"
             tools:src="@drawable/ic_launcher_background" />
 
         <TextView
@@ -41,7 +48,8 @@
             app:layout_constraintBottom_toBottomOf="@+id/image_home_full"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:text="title of home full" />
+            tools:text="title of home full"
+            android:text="@{news.title}"/>
 
         <View
             android:id="@+id/line_home_full"

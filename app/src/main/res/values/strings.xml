@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Lollipop Test</string>
+
+    <!-- General -->
+    <string name="internet_not_connected">您尚未連接 Internet</string>
+    <string name="something_wrong">Sorry! Something Wrong</string>
 </resources>

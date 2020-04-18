@@ -5,7 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.angela.lollipoptest.data.HomeItem
+import com.angela.lollipoptest.data.News
+import com.angela.lollipoptest.data.NewsResult
 import com.angela.lollipoptest.databinding.ItemHomeFullBinding
 import com.angela.lollipoptest.databinding.ItemHomeGridBinding
 
@@ -13,14 +14,14 @@ import com.angela.lollipoptest.databinding.ItemHomeGridBinding
 private const val ITEM_VIEW_TYPE_GRID = 1
 private const val ITEM_VIEW_TYPE_FULL = 2
 
-class HomeAdapter : ListAdapter<HomeItem, RecyclerView.ViewHolder>(DiffCallback) {
+class HomeAdapter : ListAdapter<NewsResult, RecyclerView.ViewHolder>(DiffCallback) {
 
     class FullViewHolder(private var binding: ItemHomeFullBinding):
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: HomeItem) {
+        fun bind(item: NewsResult) {
 
-            binding.homeItem = item
+            binding.news = item.news
             binding.executePendingBindings()
         }
     }
@@ -28,18 +29,18 @@ class HomeAdapter : ListAdapter<HomeItem, RecyclerView.ViewHolder>(DiffCallback)
     class GridViewHolder(private var binding: ItemHomeGridBinding):
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: HomeItem) {
-            binding.homeItem = item
+        fun bind(item: NewsResult) {
+            binding.news = item.news
             binding.executePendingBindings()
         }
     }
 
-    companion object DiffCallback : DiffUtil.ItemCallback<HomeItem>() {
-        override fun areItemsTheSame(oldItem: HomeItem, newItem: HomeItem): Boolean {
+    companion object DiffCallback : DiffUtil.ItemCallback<NewsResult>() {
+        override fun areItemsTheSame(oldItem: NewsResult, newItem: NewsResult): Boolean {
             return oldItem === newItem
         }
-        override fun areContentsTheSame(oldItem: HomeItem, newItem: HomeItem): Boolean {
-            return oldItem.id == newItem.id
+        override fun areContentsTheSame(oldItem: NewsResult, newItem: NewsResult): Boolean {
+            return oldItem == newItem
         }
     }
 
@@ -56,10 +57,10 @@ class HomeAdapter : ListAdapter<HomeItem, RecyclerView.ViewHolder>(DiffCallback)
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is GridViewHolder -> {
-                holder.bind(getItem(position) as HomeItem)
+                holder.bind(getItem(position) as NewsResult)
             }
             is FullViewHolder -> {
-                holder.bind(getItem(position) as HomeItem)
+                holder.bind(getItem(position) as NewsResult)
             }
         }
     }

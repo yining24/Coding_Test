@@ -4,8 +4,12 @@
 
     <data>
         <variable
-            name="homeItem"
-            type="com.angela.lollipoptest.data.HomeItem" />
+            name="homeData"
+            type="com.angela.lollipoptest.data.HomeData" />
+        <variable
+            name="news"
+            type="com.angela.lollipoptest.data.News" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,6 +25,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
             android:scaleType="centerCrop"
+            app:imageUrl="@{news.image}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
@@ -43,6 +48,7 @@
             app:layout_constraintEnd_toStartOf="@+id/image_home_grid"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:text="@{news.title}"
             tools:text="title of home full" />
 
         <View

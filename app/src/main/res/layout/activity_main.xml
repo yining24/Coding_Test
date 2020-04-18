@@ -21,7 +21,8 @@
             android:id="@+id/recycler_home"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:homeData="@{viewModel.newsResult}">
 
         </androidx.recyclerview.widget.RecyclerView>
 
