@@ -9,6 +9,7 @@ import com.angela.lollipoptest.data.News
 import com.angela.lollipoptest.data.NewsResult
 import com.angela.lollipoptest.data.Result
 import com.angela.lollipoptest.network.LoadApiStatus
+import com.angela.lollipoptest.util.Logger
 import com.angela.lollipoptest.util.Utility.getString
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -16,6 +17,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class PagingDataSource : PageKeyedDataSource<Int, NewsResult>() {
+
+    val newsInLocal: LiveData<List<News>> = LollipopApplication.INSTANCE.lollipopRepository.getNewsInLocal()
 
     private val _statusInitialLoad = MutableLiveData<LoadApiStatus>()
 
@@ -41,6 +44,10 @@ class PagingDataSource : PageKeyedDataSource<Int, NewsResult>() {
                 is Result.Success -> {
                     _errorInitialLoad.value = null
                     _statusInitialLoad.value = LoadApiStatus.DONE
+                    result.data.homeData.children?.forEach {
+                        LollipopApplication.INSTANCE.lollipopRepository.insertNewsInLocal(it.news)
+                        Logger.w("insertNewsInLocal(it.news):: ${it.news}")
+                    }
                     result.data.homeData.children?.let {
                         callback.onResult(it, null, 1) }
                 }

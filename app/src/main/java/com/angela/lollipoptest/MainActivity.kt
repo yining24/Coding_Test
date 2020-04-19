@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import com.angela.lollipoptest.databinding.ActivityMainBinding
 import com.angela.lollipoptest.home.HomePagingAdapter
 import com.angela.lollipoptest.home.HomeViewModel
+import com.angela.lollipoptest.util.Logger
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,6 +29,11 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.pagingDataNews.observe(this, Observer {
             (binding.recyclerHome.adapter as HomePagingAdapter).submitList(it)
+        })
+
+
+        viewModel.newsInLocal.observe(this, Observer {
+            Logger.i("newsInLocal from homeViewModel:: $it")
         })
 
 

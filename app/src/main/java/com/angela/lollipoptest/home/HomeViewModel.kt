@@ -14,18 +14,20 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import com.angela.lollipoptest.data.source.LollipopRepository
 import com.angela.lollipoptest.network.LoadApiStatus
-import kotlinx.coroutines.launch
-import com.angela.lollipoptest.data.Result
-import com.angela.lollipoptest.home.PagingDataSource
-import com.angela.lollipoptest.home.PagingDataSourceFactory
 import com.angela.lollipoptest.util.Logger
-import com.angela.lollipoptest.util.Utility.getString
 
 class HomeViewModel(private val repository: LollipopRepository) : ViewModel() {
 
-//    val videosLocal = LivePagedListBuilder(voiceTubeRepository.getVideoByDatabase(),3).build()
+
+//    val newsInLocal: LiveData<List<News>> = repository.getNewsInLocal()
+
+//    val news = LivePagedListBuilder(voiceTubeRepository.getVideoByDatabase(),3).build()
 
     private val sourceFactory = PagingDataSourceFactory()
+
+    val newsInLocal: LiveData<List<News>> = Transformations.switchMap(sourceFactory.sourceLiveData) {
+        it.newsInLocal
+    }
 
     val pagingDataNews: LiveData<PagedList<NewsResult>> = sourceFactory.toLiveData(1, null)
 

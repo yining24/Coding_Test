@@ -6,11 +6,13 @@ import androidx.room.Entity
 import com.squareup.moshi.Json
 import kotlinx.android.parcel.Parcelize
 
-//@Entity(tableName = "home_items", primaryKeys = ["title"])
+
 @Parcelize
 data class HomeData (
     @Json(name = "children")
     val children: List<NewsResult>? = null,
     @Json(name = "dist")
-    val dist: Long? = null
+    val dist: Long? = null,
+    @Json(name = "after")
+    val after: String? = null
 ) : Parcelable

@@ -1,10 +1,14 @@
 package com.angela.lollipoptest.data.source.remote
 
+import androidx.lifecycle.LiveData
 import com.angela.lollipoptest.data.HomeResult
 import com.angela.lollipoptest.data.source.LollipopDataSource
 import com.angela.lollipoptest.network.LollipopApi
 import com.angela.lollipoptest.data.*
+import com.angela.lollipoptest.data.source.local.LollipopDatabase
 import com.angela.lollipoptest.util.Logger
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 
 object LollipopRemoteDataSource : LollipopDataSource {
@@ -27,6 +31,12 @@ object LollipopRemoteDataSource : LollipopDataSource {
         }
     }
 
+    override fun getNewsInLocal(): LiveData<List<News>> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
-
+    override suspend fun insertNewsInLocal(news: News) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 }
+
