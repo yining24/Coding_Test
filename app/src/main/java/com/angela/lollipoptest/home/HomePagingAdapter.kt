@@ -1,11 +1,10 @@
-package com.angela.lollipoptest
+package com.angela.lollipoptest.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.angela.lollipoptest.data.News
 import com.angela.lollipoptest.data.NewsResult
 import com.angela.lollipoptest.databinding.ItemHomeFullBinding
 import com.angela.lollipoptest.databinding.ItemHomeGridBinding
@@ -14,7 +13,7 @@ import com.angela.lollipoptest.databinding.ItemHomeGridBinding
 private const val ITEM_VIEW_TYPE_GRID = 1
 private const val ITEM_VIEW_TYPE_FULL = 2
 
-class HomeAdapter : ListAdapter<NewsResult, RecyclerView.ViewHolder>(DiffCallback) {
+class HomePagingAdapter : PagedListAdapter<NewsResult, RecyclerView.ViewHolder>(DiffCallback) {
 
     class FullViewHolder(private var binding: ItemHomeFullBinding):
         RecyclerView.ViewHolder(binding.root) {
@@ -40,16 +39,22 @@ class HomeAdapter : ListAdapter<NewsResult, RecyclerView.ViewHolder>(DiffCallbac
             return oldItem === newItem
         }
         override fun areContentsTheSame(oldItem: NewsResult, newItem: NewsResult): Boolean {
-            return oldItem == newItem
+            return oldItem.news.id == newItem.news.id
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            ITEM_VIEW_TYPE_GRID -> GridViewHolder(ItemHomeGridBinding.inflate(
-                    LayoutInflater.from(parent.context), parent, false))
-            ITEM_VIEW_TYPE_FULL -> FullViewHolder(ItemHomeFullBinding.inflate(
-                    LayoutInflater.from(parent.context), parent, false))
+            ITEM_VIEW_TYPE_GRID -> GridViewHolder(
+                ItemHomeGridBinding.inflate(
+                    LayoutInflater.from(parent.context), parent, false
+                )
+            )
+            ITEM_VIEW_TYPE_FULL -> FullViewHolder(
+                ItemHomeFullBinding.inflate(
+                    LayoutInflater.from(parent.context), parent, false
+                )
+            )
             else -> throw ClassCastException("Unknown viewType $viewType")
         }
     }
@@ -71,3 +76,4 @@ class HomeAdapter : ListAdapter<NewsResult, RecyclerView.ViewHolder>(DiffCallbac
         } else ITEM_VIEW_TYPE_GRID
     }
 }
+

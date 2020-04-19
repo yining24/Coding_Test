@@ -14,6 +14,7 @@ buildscript {
         version_room = "2.1.0"
         version_glide = "4.9.0"
         version_fragment = "1.2.0-alpha01"
+        version_paging = "2.1.0-rc01"
     }
     repositories {
         google()

@@ -13,16 +13,16 @@ import com.angela.lollipoptest.network.LoadApiStatus
 import com.bumptech.glide.request.RequestOptions
 
 
-@BindingAdapter("homeData")
-fun bindRecyclerViewWithHomeItems(recyclerView: RecyclerView, homeData: List<NewsResult>?) {
-    homeData?.let {
-        recyclerView.adapter?.apply {
-            when (this) {
-                is HomeAdapter -> submitList(it)
-            }
-        }
-    }
-}
+//@BindingAdapter("homeData")
+//fun bindRecyclerViewWithHomeItems(recyclerView: RecyclerView, homeData: List<NewsResult>?) {
+//    homeData?.let {
+//        recyclerView.adapter?.apply {
+//            when (this) {
+//                is HomePagingAdapter -> submitList(it)
+//            }
+//        }
+//    }
+//}
 
 /**
  * Uses the Glide library to load an image by URL into an [ImageView]

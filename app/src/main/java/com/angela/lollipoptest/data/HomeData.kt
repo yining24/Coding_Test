@@ -10,7 +10,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class HomeData (
     @Json(name = "children")
-    val children: List<NewsResult>,
+    val children: List<NewsResult>? = null,
     @Json(name = "dist")
-    val dist: Long
+    val dist: Long? = null
 ) : Parcelable
