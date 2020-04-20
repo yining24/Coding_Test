@@ -11,11 +11,13 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 private const val HOST_NAME = "www.reddit.com/r"
 private const val JSON_ROUTE = "hot.json"
+private const val JSON_AFTER = "hot.json?after="
 private const val BASE_URL = "https://$HOST_NAME/Taiwan/"
-
 
 /**
  * Build the Moshi object that Retrofit will be using, making sure to add the Kotlin adapter for
@@ -45,6 +47,10 @@ private val retrofit = Retrofit.Builder()
 interface LollipopApiService {
     @GET(JSON_ROUTE)
     fun getHome():
+            Deferred<HomeResult>
+
+    @GET(JSON_ROUTE)
+    fun getOldHome(@Query("after") after: String? = null):
             Deferred<HomeResult>
 }
 

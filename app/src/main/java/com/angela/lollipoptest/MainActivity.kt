@@ -1,5 +1,6 @@
 package com.angela.lollipoptest
 
+import android.app.Application
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -27,6 +28,8 @@ class MainActivity : AppCompatActivity() {
         val adapter = HomePagingAdapter()
         binding.recyclerHome.adapter = adapter
 
+        adapter.submitList(viewModel.newsInLocal)
+
         viewModel.pagingDataNews.observe(this, Observer {
             (binding.recyclerHome.adapter as HomePagingAdapter).submitList(it)
         })
@@ -47,6 +50,8 @@ class MainActivity : AppCompatActivity() {
 //        adapter.submitList(listOf(items))   //帶入假資料
 
     }
+
+
 
 
 

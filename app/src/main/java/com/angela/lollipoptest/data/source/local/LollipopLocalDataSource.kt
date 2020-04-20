@@ -18,6 +18,10 @@ class LollipopLocalDataSource(val context: Context) : LollipopDataSource {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    override suspend fun getOldHome(after: String): Result<HomeResult>{
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun getNewsInLocal(): LiveData<List<News>> {
         return LollipopDatabase.getInstance(context).lollipopDatabaseDao.getAllNews()
     }

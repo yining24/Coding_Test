@@ -12,6 +12,8 @@ interface LollipopRepository {
 
     suspend fun getHome(): Result<HomeResult>
 
+    suspend fun getOldHome(after: String): Result<HomeResult>
+
     suspend fun insertNewsInLocal(news: News)
 
     fun getNewsInLocal(): LiveData<List<News>>

@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.angela.lollipoptest.data.News
 import com.angela.lollipoptest.data.NewsResult
 import com.angela.lollipoptest.databinding.ItemHomeFullBinding
 import com.angela.lollipoptest.databinding.ItemHomeGridBinding

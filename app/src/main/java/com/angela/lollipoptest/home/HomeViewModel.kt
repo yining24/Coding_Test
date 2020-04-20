@@ -19,15 +19,11 @@ import com.angela.lollipoptest.util.Logger
 class HomeViewModel(private val repository: LollipopRepository) : ViewModel() {
 
 
-//    val newsInLocal: LiveData<List<News>> = repository.getNewsInLocal()
-
 //    val news = LivePagedListBuilder(voiceTubeRepository.getVideoByDatabase(),3).build()
 
     private val sourceFactory = PagingDataSourceFactory()
 
-    val newsInLocal: LiveData<List<News>> = Transformations.switchMap(sourceFactory.sourceLiveData) {
-        it.newsInLocal
-    }
+    val newsInLocal: LiveData<List<News>> = repository.getNewsInLocal()
 
     val pagingDataNews: LiveData<PagedList<NewsResult>> = sourceFactory.toLiveData(1, null)
 

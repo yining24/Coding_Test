@@ -22,6 +22,10 @@ class LollipopDefaultRepository(
         return lollipopRemoteDataSource.getHome()
     }
 
+    override suspend fun getOldHome(after: String): Result<HomeResult>{
+        return lollipopRemoteDataSource.getOldHome(after)
+    }
+
     override fun getNewsInLocal(): LiveData<List<News>> {
         return lollipopLocalDataSource.getNewsInLocal()
     }

@@ -31,6 +31,23 @@ object LollipopRemoteDataSource : LollipopDataSource {
         }
     }
 
+    override suspend fun getOldHome(after: String): Result<HomeResult> {
+
+        val getResultDeferred = LollipopApi.RETROFIT_SERVICE.getOldHome(after)
+        return try {
+            val listResult = getResultDeferred.await()
+
+            listResult.error?.let {
+                return Result.Fail(it)
+            }
+            Result.Success(listResult)
+
+        } catch (e: Exception) {
+            Logger.w("[${this::class.simpleName}] exception=${e.message}")
+            Result.Error(e)
+        }
+    }
+
     override fun getNewsInLocal(): LiveData<List<News>> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }

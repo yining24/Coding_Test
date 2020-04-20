@@ -15,8 +15,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import okhttp3.internal.notifyAll
 
-class PagingDataSource : PageKeyedDataSource<Int, NewsResult>() {
+class PagingDataSource : PageKeyedDataSource<String, NewsResult>() {
 
     val newsInLocal: LiveData<List<News>> = LollipopApplication.INSTANCE.lollipopRepository.getNewsInLocal()
 
@@ -33,23 +34,23 @@ class PagingDataSource : PageKeyedDataSource<Int, NewsResult>() {
     private val coroutineScope = CoroutineScope(Job() + Dispatchers.Main)
 
 
-    override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, NewsResult>) {
+    override fun loadInitial(params: LoadInitialParams<String>, callback: LoadInitialCallback<String, NewsResult>) {
 
         coroutineScope.launch {
 
             _statusInitialLoad.value = LoadApiStatus.LOADING
 
-            val result = LollipopApplication.INSTANCE.lollipopRepository.getHome()
+            val result = LollipopApplication.INSTANCE.lollipopRepository.getOldHome("")
             when (result) {
                 is Result.Success -> {
                     _errorInitialLoad.value = null
                     _statusInitialLoad.value = LoadApiStatus.DONE
                     result.data.homeData.children?.forEach {
                         LollipopApplication.INSTANCE.lollipopRepository.insertNewsInLocal(it.news)
-                        Logger.w("insertNewsInLocal(it.news):: ${it.news}")
+//                        Logger.w("insertNewsInLocal(it.news):: ${it.news}")
                     }
                     result.data.homeData.children?.let {
-                        callback.onResult(it, null, 1) }
+                        callback.onResult(it, null, result.data.homeData.after) }
                 }
                 is Result.Fail -> {
                     _errorInitialLoad.value = result.error
@@ -67,22 +68,23 @@ class PagingDataSource : PageKeyedDataSource<Int, NewsResult>() {
         }
     }
 
-    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, NewsResult>) {
+    override fun loadAfter(params: LoadParams<String>, callback: LoadCallback<String, NewsResult>) {
 
         coroutineScope.launch {
             _statusInitialLoad.value = LoadApiStatus.LOADING
 
-            val result = LollipopApplication.INSTANCE.lollipopRepository.getHome()
+            val result = LollipopApplication.INSTANCE.lollipopRepository.getOldHome(params.key)
             when (result) {
                 is Result.Success -> {
                     _statusInitialLoad.value = LoadApiStatus.DONE
-                    result.data.homeData.children?.let { callback.onResult(it, 1) }
+                    result.data.homeData.children?.let {
+                        callback.onResult(it, result.data.homeData.after) }
                 }
             }
         }
     }
 
-    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, NewsResult>) {
+    override fun loadBefore(params: LoadParams<String>, callback: LoadCallback<String, NewsResult>) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
