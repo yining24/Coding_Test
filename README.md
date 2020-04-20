@@ -1,12 +1,16 @@
 # Infinite scroll by using Paging Library
 
-Paging library makes it efficiently to load data gradually in app and supports large lists.
+## Why to use it?
+Infinitely scroll only download partial data and then load more data on demand when the scroll reaches the bottom.
+<img src=https://github.com/yining24/Coding_Test/blob/master/demo.png width="250"/>
+
+Paging library makes it efficiently and faster to load data gradually in app.
 Here we use Paging on the idea of sending lists to the UI with the live data that is observed by RecyclerView.Adapter.
 There are three class must be set:
 1. PagedListAdapter 
 2. PagedList 
 3. DataSource
-(Following will mention)
+(Following will mention how to implement)
 
 
 ## Step 1 : Add dependencies
