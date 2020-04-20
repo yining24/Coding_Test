@@ -7,5 +7,5 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class NewsResult (
-    @Json(name = "data") val news: News
+    @Json(name = "data") var news: News
 ) : Parcelable

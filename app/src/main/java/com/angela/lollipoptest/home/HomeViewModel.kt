@@ -1,9 +1,7 @@
 package com.angela.lollipoptest.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
 import com.angela.lollipoptest.data.HomeData
@@ -18,12 +16,26 @@ import com.angela.lollipoptest.util.Logger
 
 class HomeViewModel(private val repository: LollipopRepository) : ViewModel() {
 
-
-//    val news = LivePagedListBuilder(voiceTubeRepository.getVideoByDatabase(),3).build()
-
     private val sourceFactory = PagingDataSourceFactory()
 
     val newsInLocal: LiveData<List<News>> = repository.getNewsInLocal()
+
+//    var newsResultLocal : PagedList<NewsResult>
+
+//    val isNewsPrepared = MediatorLiveData<Boolean>().apply {
+//        addSource(newsInLocal) {
+//            value = !newsInLocal.value.isNullOrEmpty()
+//            if (value == true) {
+//                newsInLocal.value?.forEach {
+//                    pagingDataNews.value?.map {re ->
+//                        re.news = it
+//                    }
+//                }
+//                Logger.i("newsResultLocal:::::${pagingDataNews.value}")
+//            }
+//        }
+//    }
+
 
     val pagingDataNews: LiveData<PagedList<NewsResult>> = sourceFactory.toLiveData(1, null)
 
@@ -52,5 +64,13 @@ class HomeViewModel(private val repository: LollipopRepository) : ViewModel() {
         Logger.i("------------------------------------")
         Logger.i("[${this::class.simpleName}]${this}")
         Logger.i("------------------------------------")
+
+        newsInLocal.value?.forEach {
+            pagingDataNews.value?.map {re ->
+                    re.news = it
+                }
+            Logger.i("newsResultLocal:::::$pagingDataNews")
+            }
+        }
     }
-    }
+
