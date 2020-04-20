@@ -4,15 +4,11 @@
 
     <data>
         <variable
-            name="homeData"
-            type="com.angela.lollipoptest.data.HomeData" />
-        <variable
             name="news"
             type="com.angela.lollipoptest.data.News" />
         <variable
             name="newsResult"
             type="com.angela.lollipoptest.data.NewsResult" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,7 +19,7 @@
         <ImageView
             android:id="@+id/image_home_full"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="120dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:scaleType="centerCrop"
@@ -32,7 +28,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:imageUrl="@{news.image}"
-            tools:src="@drawable/ic_launcher_background" />
+            tools:src="@color/white" />
 
         <TextView
             android:id="@+id/title_home_full"
@@ -40,22 +36,26 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="4dp"
             android:ellipsize="end"
             android:fontFamily="@font/noto_sans"
-            android:textColor="@color/black"
+            android:shadowColor="@color/black"
+            android:shadowDx="2"
+            android:shadowDy="3"
+            android:shadowRadius="3"
+            android:text="@{news.title}"
+            android:textColor="@color/white"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="@+id/image_home_full"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:text="title of home full"
-            android:text="@{news.title}"/>
+            tools:text="title of home full" />
 
         <View
             android:id="@+id/line_home_full"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/gray_999999"
+            android:background="@color/gray_light"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

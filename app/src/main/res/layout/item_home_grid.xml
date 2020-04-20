@@ -9,7 +9,6 @@
         <variable
             name="news"
             type="com.angela.lollipoptest.data.News" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,8 +18,8 @@
 
         <ImageView
             android:id="@+id/image_home_grid"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
@@ -30,7 +29,7 @@
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/ic_launcher_background" />
+            tools:src="@color/gray_dark" />
 
         <TextView
             android:id="@+id/title_home_grid"
@@ -39,23 +38,21 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp"
             android:ellipsize="end"
             android:fontFamily="@font/noto_sans"
+            android:text="@{news.title}"
             android:textColor="@color/black"
             android:textSize="15sp"
-            app:layout_constraintBottom_toBottomOf="@+id/image_home_full"
             app:layout_constraintEnd_toStartOf="@+id/image_home_grid"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="@{news.title}"
             tools:text="title of home full" />
 
         <View
             android:id="@+id/line_home_grid"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/gray_999999"
+            android:background="@color/gray_light"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
