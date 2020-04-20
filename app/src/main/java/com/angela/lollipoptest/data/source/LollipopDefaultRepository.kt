@@ -13,12 +13,8 @@ class LollipopDefaultRepository(
     private val lollipopLocalDataSource: LollipopDataSource
 ) : LollipopRepository {
 
-    override suspend fun getHome(): Result<HomeResult> {
-        return lollipopRemoteDataSource.getHome()
-    }
-
-    override suspend fun getOldHome(after: String): Result<HomeResult>{
-        return lollipopRemoteDataSource.getOldHome(after)
+    override suspend fun getHome(after: String): Result<HomeResult>{
+        return lollipopRemoteDataSource.getHome(after)
     }
 
     override fun getNewsInLocal(): LiveData<List<News>> {

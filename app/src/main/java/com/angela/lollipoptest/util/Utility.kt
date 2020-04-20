@@ -1,13 +1,11 @@
 package com.angela.lollipoptest.util
 
-import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import com.angela.lollipoptest.LollipopApplication
 
 object Utility {
-
 
     fun isInternetConnected(): Boolean {
         val cm = LollipopApplication.INSTANCE

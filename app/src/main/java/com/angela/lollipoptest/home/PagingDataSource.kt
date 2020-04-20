@@ -5,21 +5,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.angela.lollipoptest.LollipopApplication
 import com.angela.lollipoptest.R
-import com.angela.lollipoptest.data.News
 import com.angela.lollipoptest.data.NewsResult
 import com.angela.lollipoptest.data.Result
 import com.angela.lollipoptest.network.LoadApiStatus
-import com.angela.lollipoptest.util.Logger
 import com.angela.lollipoptest.util.Utility.getString
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import okhttp3.internal.notifyAll
 
 class PagingDataSource : PageKeyedDataSource<String, NewsResult>() {
 
-    val newsInLocal: LiveData<List<News>> = LollipopApplication.INSTANCE.lollipopRepository.getNewsInLocal()
+//    val newsInLocal: LiveData<List<News>> = LollipopApplication.INSTANCE.lollipopRepository.getNewsInLocal()
 
     private val _statusInitialLoad = MutableLiveData<LoadApiStatus>()
 
@@ -40,7 +37,7 @@ class PagingDataSource : PageKeyedDataSource<String, NewsResult>() {
 
             _statusInitialLoad.value = LoadApiStatus.LOADING
 
-            val result = LollipopApplication.INSTANCE.lollipopRepository.getOldHome("")
+            val result = LollipopApplication.INSTANCE.lollipopRepository.getHome("")
             when (result) {
                 is Result.Success -> {
                     _errorInitialLoad.value = null
@@ -73,7 +70,7 @@ class PagingDataSource : PageKeyedDataSource<String, NewsResult>() {
         coroutineScope.launch {
             _statusInitialLoad.value = LoadApiStatus.LOADING
 
-            val result = LollipopApplication.INSTANCE.lollipopRepository.getOldHome(params.key)
+            val result = LollipopApplication.INSTANCE.lollipopRepository.getHome(params.key)
             when (result) {
                 is Result.Success -> {
                     _statusInitialLoad.value = LoadApiStatus.DONE

@@ -9,27 +9,9 @@ import com.angela.lollipoptest.util.Logger
 
 object LollipopRemoteDataSource : LollipopDataSource {
 
-    override suspend fun getHome(): Result<HomeResult> {
+    override suspend fun getHome(after: String): Result<HomeResult> {
 
-        val getResultDeferred = LollipopApi.RETROFIT_SERVICE.getHome()
-        return try {
-            // this will run on a thread managed by Retrofit
-            val listResult = getResultDeferred.await()
-
-            listResult.error?.let {
-                return Result.Fail(it)
-            }
-            Result.Success(listResult)
-
-        } catch (e: Exception) {
-            Logger.w("[${this::class.simpleName}] exception=${e.message}")
-            Result.Error(e)
-        }
-    }
-
-    override suspend fun getOldHome(after: String): Result<HomeResult> {
-
-        val getResultDeferred = LollipopApi.RETROFIT_SERVICE.getOldHome(after)
+        val getResultDeferred = LollipopApi.RETROFIT_SERVICE.getHome(after)
         return try {
             val listResult = getResultDeferred.await()
 

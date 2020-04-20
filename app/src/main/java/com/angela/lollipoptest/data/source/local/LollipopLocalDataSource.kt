@@ -12,11 +12,7 @@ import kotlinx.coroutines.withContext
 
 class LollipopLocalDataSource(val context: Context) : LollipopDataSource {
 
-    override suspend fun getHome(): Result<HomeResult> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override suspend fun getOldHome(after: String): Result<HomeResult>{
+    override suspend fun getHome(after: String): Result<HomeResult>{
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

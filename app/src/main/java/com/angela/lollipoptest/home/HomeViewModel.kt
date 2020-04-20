@@ -1,10 +1,8 @@
 package com.angela.lollipoptest.home
 
 import androidx.lifecycle.*
-import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
-import com.angela.lollipoptest.data.HomeData
 import com.angela.lollipoptest.data.News
 import com.angela.lollipoptest.data.NewsResult
 import kotlinx.coroutines.CoroutineScope
@@ -20,25 +18,7 @@ class HomeViewModel(private val repository: LollipopRepository) : ViewModel() {
 
     val newsInLocal: LiveData<List<News>> = repository.getNewsInLocal()
 
-//    var newsResultLocal : PagedList<NewsResult>
-
-//    val isNewsPrepared = MediatorLiveData<Boolean>().apply {
-//        addSource(newsInLocal) {
-//            value = !newsInLocal.value.isNullOrEmpty()
-//            if (value == true) {
-//                newsInLocal.value?.forEach {
-//                    pagingDataNews.value?.map {re ->
-//                        re.news = it
-//                    }
-//                }
-//                Logger.i("newsResultLocal:::::${pagingDataNews.value}")
-//            }
-//        }
-//    }
-
-
     val pagingDataNews: LiveData<PagedList<NewsResult>> = sourceFactory.toLiveData(1, null)
-
 
     // Handle load api status
     val status: LiveData<LoadApiStatus> = Transformations.switchMap(sourceFactory.sourceLiveData) {
@@ -48,7 +28,6 @@ class HomeViewModel(private val repository: LollipopRepository) : ViewModel() {
     val error: LiveData<String> = Transformations.switchMap(sourceFactory.sourceLiveData) {
         it.errorInitialLoad
     }
-
 
     private var viewModelJob = Job()
 
@@ -64,13 +43,6 @@ class HomeViewModel(private val repository: LollipopRepository) : ViewModel() {
         Logger.i("------------------------------------")
         Logger.i("[${this::class.simpleName}]${this}")
         Logger.i("------------------------------------")
-
-        newsInLocal.value?.forEach {
-            pagingDataNews.value?.map {re ->
-                    re.news = it
-                }
-            Logger.i("newsResultLocal:::::$pagingDataNews")
-            }
         }
     }
 

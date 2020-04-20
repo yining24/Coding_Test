@@ -10,9 +10,7 @@ import com.angela.lollipoptest.data.Result
  */
 interface LollipopRepository {
 
-    suspend fun getHome(): Result<HomeResult>
-
-    suspend fun getOldHome(after: String): Result<HomeResult>
+    suspend fun getHome(after: String): Result<HomeResult>
 
     suspend fun insertNewsInLocal(news: News)
 

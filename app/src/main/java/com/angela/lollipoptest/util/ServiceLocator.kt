@@ -18,11 +18,11 @@ object ServiceLocator {
         synchronized(this) {
             return lollipopRepository
                 ?: lollipopRepository
-                ?: createLineTVRepository(context)
+                ?: createLollipopRepository(context)
         }
     }
 
-    private fun createLineTVRepository(context: Context): LollipopRepository {
+    private fun createLollipopRepository(context: Context): LollipopRepository {
         return LollipopDefaultRepository(
             LollipopRemoteDataSource,
             createLocalDataSource(context)

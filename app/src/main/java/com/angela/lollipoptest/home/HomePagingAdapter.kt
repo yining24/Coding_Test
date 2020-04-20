@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.angela.lollipoptest.data.News
 import com.angela.lollipoptest.data.NewsResult
 import com.angela.lollipoptest.databinding.ItemHomeFullBinding
 import com.angela.lollipoptest.databinding.ItemHomeGridBinding
@@ -13,10 +12,11 @@ import com.angela.lollipoptest.databinding.ItemHomeGridBinding
 
 private const val ITEM_VIEW_TYPE_GRID = 1
 private const val ITEM_VIEW_TYPE_FULL = 2
+private const val ITEM_POSITION_FULL = 5
 
 class HomePagingAdapter : PagedListAdapter<NewsResult, RecyclerView.ViewHolder>(DiffCallback) {
 
-    class FullViewHolder(private var binding: ItemHomeFullBinding):
+    class FullViewHolder(private var binding: ItemHomeFullBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: NewsResult) {
@@ -26,7 +26,7 @@ class HomePagingAdapter : PagedListAdapter<NewsResult, RecyclerView.ViewHolder>(
         }
     }
 
-    class GridViewHolder(private var binding: ItemHomeGridBinding):
+    class GridViewHolder(private var binding: ItemHomeGridBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: NewsResult) {
@@ -39,6 +39,7 @@ class HomePagingAdapter : PagedListAdapter<NewsResult, RecyclerView.ViewHolder>(
         override fun areItemsTheSame(oldItem: NewsResult, newItem: NewsResult): Boolean {
             return oldItem === newItem
         }
+
         override fun areContentsTheSame(oldItem: NewsResult, newItem: NewsResult): Boolean {
             return oldItem.news.id == newItem.news.id
         }
@@ -72,7 +73,7 @@ class HomePagingAdapter : PagedListAdapter<NewsResult, RecyclerView.ViewHolder>(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (position % 5 == 0) {
+        return if (position % ITEM_POSITION_FULL == 0) {
             ITEM_VIEW_TYPE_FULL
         } else ITEM_VIEW_TYPE_GRID
     }
