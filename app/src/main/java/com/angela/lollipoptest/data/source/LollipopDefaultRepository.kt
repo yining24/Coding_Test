@@ -4,18 +4,13 @@ import androidx.lifecycle.LiveData
 import com.angela.lollipoptest.data.HomeResult
 import com.angela.lollipoptest.data.News
 import com.angela.lollipoptest.data.Result
-import com.angela.lollipoptest.data.source.local.LollipopDatabase
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 /**
- * Concrete implementation to load LineTV sources.
+ * Concrete implementation to load Lollipop sources.
  */
 class LollipopDefaultRepository(
     private val lollipopRemoteDataSource: LollipopDataSource,
-    private val lollipopLocalDataSource: LollipopDataSource,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val lollipopLocalDataSource: LollipopDataSource
 ) : LollipopRepository {
 
     override suspend fun getHome(): Result<HomeResult> {

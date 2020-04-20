@@ -6,7 +6,7 @@ import com.angela.lollipoptest.data.News
 import com.angela.lollipoptest.data.Result
 
 /**
- * Main entry point for accessing LineTV sources.
+ * Main entry point for accessing Lollipop sources.
  */
 interface LollipopDataSource {
 

@@ -9,9 +9,7 @@ import com.angela.lollipoptest.data.source.LollipopDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-/**
- * Concrete implementation of a LineTV source as a db.
- */
+
 class LollipopLocalDataSource(val context: Context) : LollipopDataSource {
 
     override suspend fun getHome(): Result<HomeResult> {

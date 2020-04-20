@@ -6,7 +6,7 @@ import com.angela.lollipoptest.data.News
 import com.angela.lollipoptest.data.Result
 
 /**
- * Interface to the LineTV layers.
+ * Interface to the Lollipop layers.
  */
 interface LollipopRepository {
 
