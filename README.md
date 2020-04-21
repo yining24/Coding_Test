@@ -79,7 +79,7 @@ class PagingDataSource : PageKeyedDataSource<String, NewsResult>() {
 
     private val coroutineScope = CoroutineScope(Job() + Dispatchers.Main)
 
-//Hewe we load the initial data.
+//Here we load the initial data.
     override fun loadInitial(params: LoadInitialParams<String>, callback: LoadInitialCallback<String, NewsResult>) {
 
         coroutineScope.launch {
@@ -111,7 +111,7 @@ class PagingDataSource : PageKeyedDataSource<String, NewsResult>() {
         }
     }
     
-//Hewe we load the data after initial.
+//Here will load the data after initial.
     override fun loadAfter(params: LoadParams<String>, callback: LoadCallback<String, NewsResult>) {
 
         coroutineScope.launch {
