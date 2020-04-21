@@ -16,7 +16,7 @@ There are three class(Following will mention how to implement):
 
 ```kotlin
 dependencies {
-implementation "androidx.paging:paging-runtime-ktx:$version_paging"
+implementation "androidx.paging:paging-runtime-ktx:2.1.0-alpha01"
 }
 ```
 
@@ -47,7 +47,7 @@ PagedListAdapter is an implementation of RecyclerView.Adapter that presents data
 ```kotlin
 class HomePagingAdapter : PagedListAdapter<NewsResult, RecyclerView.ViewHolder>(DiffCallback) {
 
-//mothod of RecyclerView.Adapter
+//method of RecyclerView.Adapter
 
 }
 ```
@@ -79,7 +79,7 @@ class PagingDataSource : PageKeyedDataSource<String, NewsResult>() {
 
     private val coroutineScope = CoroutineScope(Job() + Dispatchers.Main)
 
-//Hewe will load the data initially.
+//Hewe we load the initial data.
     override fun loadInitial(params: LoadInitialParams<String>, callback: LoadInitialCallback<String, NewsResult>) {
 
         coroutineScope.launch {
@@ -111,7 +111,7 @@ class PagingDataSource : PageKeyedDataSource<String, NewsResult>() {
         }
     }
     
-//Hewe will load the data after initial.
+//Hewe we load the data after initial.
     override fun loadAfter(params: LoadParams<String>, callback: LoadCallback<String, NewsResult>) {
 
         coroutineScope.launch {
