@@ -42,10 +42,10 @@ class PagingDataSource : PageKeyedDataSource<String, NewsResult>() {
                 is Result.Success -> {
                     _errorInitialLoad.value = null
                     _statusInitialLoad.value = LoadApiStatus.DONE
-                    result.data.homeData.children?.forEach {
-                        LollipopApplication.INSTANCE.lollipopRepository.insertNewsInLocal(it.news)
-//                        Logger.w("insertNewsInLocal(it.news):: ${it.news}")
-                    }
+//                    result.data.homeData.children?.forEach {
+//                        LollipopApplication.INSTANCE.lollipopRepository.insertNewsInLocal(it.news)
+////                        Logger.w("insertNewsInLocal(it.news):: ${it.news}")
+//                    }
                     result.data.homeData.children?.let {
                         callback.onResult(it, null, result.data.homeData.after) }
                 }
