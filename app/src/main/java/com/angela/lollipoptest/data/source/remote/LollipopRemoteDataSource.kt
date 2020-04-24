@@ -11,7 +11,7 @@ object LollipopRemoteDataSource : LollipopDataSource {
 
     override suspend fun getHome(after: String): Result<HomeResult> {
 
-        val getResultDeferred = LollipopApi.RETROFIT_SERVICE.getHome(after)
+        val getResultDeferred = LollipopApi.retrofitService.getHome(after)
         return try {
             val listResult = getResultDeferred.await()
 
@@ -30,7 +30,11 @@ object LollipopRemoteDataSource : LollipopDataSource {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override suspend fun insertNewsInLocal(news: News) {
+    override suspend fun insertNewsInLocal(news: List<News>) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override suspend fun deleteTable() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

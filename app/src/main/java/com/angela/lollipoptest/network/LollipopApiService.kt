@@ -52,5 +52,5 @@ interface LollipopApiService {
  * A public Api object that exposes the lazy-initialized Retrofit service
  */
 object LollipopApi {
-    val RETROFIT_SERVICE : LollipopApiService by lazy { retrofit.create(LollipopApiService::class.java) }
+    val retrofitService : LollipopApiService by lazy { retrofit.create(LollipopApiService::class.java) }
 }

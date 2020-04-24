@@ -12,7 +12,6 @@ class LollipopDefaultRepository(
     private val lollipopRemoteDataSource: LollipopDataSource,
     private val lollipopLocalDataSource: LollipopDataSource
 ) : LollipopRepository {
-
     override suspend fun getHome(after: String): Result<HomeResult>{
         return lollipopRemoteDataSource.getHome(after)
     }
@@ -21,8 +20,12 @@ class LollipopDefaultRepository(
         return lollipopLocalDataSource.getNewsInLocal()
     }
 
-    override suspend fun insertNewsInLocal(news: News) {
+    override suspend fun insertNewsInLocal(news: List<News>) {
         return lollipopLocalDataSource.insertNewsInLocal(news)
+    }
+
+    override suspend fun deleteTable() {
+        return lollipopLocalDataSource.deleteTable()
     }
 
 }

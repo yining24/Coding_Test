@@ -8,12 +8,15 @@ import com.angela.lollipoptest.data.News
 interface LollipopDatabaseDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(news: News)
+    fun insert(newsList: List<News>)
 
 
-    @Query("SELECT * FROM news_in_table ORDER BY news_id ASC")
+    @Query("SELECT * FROM news_in_table")
     fun getAllNews():
             LiveData<List<News>>
+
+    @Query("DELETE FROM news_in_table")
+    fun deleteTable()
 
 }
 

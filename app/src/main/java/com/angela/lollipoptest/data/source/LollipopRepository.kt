@@ -12,8 +12,10 @@ interface LollipopRepository {
 
     suspend fun getHome(after: String): Result<HomeResult>
 
-    suspend fun insertNewsInLocal(news: News)
+    suspend fun insertNewsInLocal(news: List<News>)
 
     fun getNewsInLocal(): LiveData<List<News>>
+
+    suspend fun deleteTable()
 
 }

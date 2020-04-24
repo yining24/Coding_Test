@@ -20,5 +20,8 @@ data class News (
     val image: String,
     @ColumnInfo(name = "news_id")
     @Json(name = "id")
-    val id: String
+    val id: String,
+    @ColumnInfo(name = "news_time")
+    @Json(name = "created_utc")
+    val time: Long
 ) : Parcelable

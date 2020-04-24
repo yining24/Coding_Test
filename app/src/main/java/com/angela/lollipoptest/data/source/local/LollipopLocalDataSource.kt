@@ -20,9 +20,15 @@ class LollipopLocalDataSource(val context: Context) : LollipopDataSource {
         return LollipopDatabase.getInstance(context).lollipopDatabaseDao.getAllNews()
     }
 
-    override suspend fun insertNewsInLocal(news: News) {
+    override suspend fun insertNewsInLocal(news: List<News>) {
         withContext(Dispatchers.IO) {
             LollipopDatabase.getInstance(context).lollipopDatabaseDao.insert(news)
+        }
+    }
+
+    override suspend fun deleteTable() {
+        withContext(Dispatchers.IO) {
+            LollipopDatabase.getInstance(context).lollipopDatabaseDao.deleteTable()
         }
     }
 
