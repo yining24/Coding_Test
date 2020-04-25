@@ -2,6 +2,7 @@ package com.angela.lollipoptest.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +15,7 @@ private const val ITEM_VIEW_TYPE_GRID = 1
 private const val ITEM_VIEW_TYPE_FULL = 2
 private const val ITEM_POSITION_FULL = 5
 
-class HomePagingAdapter : ListAdapter<News, RecyclerView.ViewHolder>(DiffCallback) {
+class HomePagingAdapter : PagedListAdapter<News, RecyclerView.ViewHolder>(DiffCallback) {
 
 //    private var newsList: List<News>? = null
 
@@ -39,11 +40,12 @@ class HomePagingAdapter : ListAdapter<News, RecyclerView.ViewHolder>(DiffCallbac
 
     companion object DiffCallback : DiffUtil.ItemCallback<News>() {
         override fun areItemsTheSame(oldItem: News, newItem: News): Boolean {
-            return oldItem === newItem
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(oldItem: News, newItem: News): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem.title == newItem.title
+                    && oldItem.time == newItem.time
         }
     }
 
@@ -66,10 +68,10 @@ class HomePagingAdapter : ListAdapter<News, RecyclerView.ViewHolder>(DiffCallbac
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
             when (holder) {
                 is GridViewHolder -> {
-                    holder.bind(getItem(position))
+                    holder.bind(getItem(position) as News)
                 }
                 is FullViewHolder -> {
-                    holder.bind(getItem(position))
+                    holder.bind(getItem(position) as News)
                 }
             }
     }

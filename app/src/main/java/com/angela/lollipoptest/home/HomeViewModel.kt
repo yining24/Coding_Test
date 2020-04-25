@@ -28,9 +28,23 @@ class HomeViewModel(private val repository: LollipopRepository) : ViewModel() {
 //    private val sourceFactory = PagingDataSourceFactory()
 //val pagingDataNews: LiveData<PagedList<NewsResult>> = sourceFactory.toLiveData(1, null)
 
-    val newsInLocal: LiveData<List<News>> = repository.getNewsInLocal()
+//    val newsIn: LiveData<List<News>> = repository.getNewsInLocal()
 
     var nextPage :String = ""
+//
+//
+//    val isNewsPrepared = MediatorLiveData<Boolean>().apply {
+//        addSource(newsIn) {
+//            value = !newsIn.value.isNullOrEmpty()
+//            if (value == true) {
+//                _newsInLocal.value = newsIn.value
+//            }
+//        }
+//    }
+    private val _newsInLocal = MutableLiveData<List<News>>()
+    val newsInLocal: LiveData<List<News>>
+        get() = _newsInLocal
+
 
 //
 //    // Handle load api status
@@ -76,12 +90,12 @@ class HomeViewModel(private val repository: LollipopRepository) : ViewModel() {
         Logger.i("[${this::class.simpleName}]${this}")
         Logger.i("------------------------------------")
 
-        getNews(true)
+//        getNews(true)
 
     }
 
 
-    private fun getNews(isInitial: Boolean = false) {
+    fun getNews(isInitial: Boolean = false) {
 
         coroutineScope.launch {
 
@@ -101,9 +115,10 @@ class HomeViewModel(private val repository: LollipopRepository) : ViewModel() {
                 when (val result = repository.getHome(nextPage)) {
                     is Result.Success -> {
                         _error.value = null
-                        repository.deleteTable()
-                        if (isInitial) _status.value = LoadApiStatus.DONE
-
+                        if (isInitial) {
+//                            repository.deleteTable()
+                            _status.value = LoadApiStatus.DONE
+                        }
                         nextPage = result.data.homeData.after?:""
 
                         val list = mutableListOf<News>()
@@ -115,7 +130,7 @@ class HomeViewModel(private val repository: LollipopRepository) : ViewModel() {
                         repository.insertNewsInLocal(list)
 
 //                        result.data.homeData.children?.forEach {
-//                            repository.insertNewsInLocal(it.news)
+//                            repository.insertNewsInLocal(it)
 //                        }
                     }
                     is Result.Fail -> {

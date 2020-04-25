@@ -5,7 +5,10 @@ import com.angela.lollipoptest.data.HomeResult
 import com.angela.lollipoptest.data.source.LollipopDataSource
 import com.angela.lollipoptest.network.LollipopApi
 import com.angela.lollipoptest.data.*
+import com.angela.lollipoptest.data.source.local.LollipopDatabase
 import com.angela.lollipoptest.util.Logger
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 object LollipopRemoteDataSource : LollipopDataSource {
 
@@ -36,6 +39,11 @@ object LollipopRemoteDataSource : LollipopDataSource {
 
     override suspend fun deleteTable() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override suspend fun postNewsInLocal() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 }
 

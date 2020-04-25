@@ -3,6 +3,7 @@ package com.angela.lollipoptest.data.source
 import androidx.lifecycle.LiveData
 import com.angela.lollipoptest.data.HomeResult
 import com.angela.lollipoptest.data.News
+import com.angela.lollipoptest.data.NewsResult
 import com.angela.lollipoptest.data.Result
 
 /**
@@ -17,5 +18,7 @@ interface LollipopRepository {
     fun getNewsInLocal(): LiveData<List<News>>
 
     suspend fun deleteTable()
+
+    suspend fun postNewsInLocal()
 
 }
