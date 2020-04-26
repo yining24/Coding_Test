@@ -1,18 +1,22 @@
 # Infinite scroll by using Paging Library
 
-Paging library makes it efficiently to load data gradually in app and supports large lists.
+## Why to use it?
+Infinitely scroll only download partial data and then load more data on demand when the scroll reaches the bottom.
+<img src=https://github.com/yining24/Coding_Test/blob/master/demo.png width="250"/>
+
+Paging library makes it efficiently and faster to load data gradually in app.
 Here we use Paging on the idea of sending lists to the UI with the live data that is observed by RecyclerView.Adapter.
-There are three class must be set:
+There are three class(Following will mention how to implement):
 1. PagedListAdapter 
 2. PagedList 
 3. DataSource
-(Following will mention)
 
 
 ## Step 1 : Add dependencies
+
 ```kotlin
 dependencies {
-implementation "androidx.paging:paging-runtime-ktx:$version_paging"
+implementation "androidx.paging:paging-runtime-ktx:2.1.0-alpha01"
 }
 ```
 
@@ -43,19 +47,20 @@ PagedListAdapter is an implementation of RecyclerView.Adapter that presents data
 ```kotlin
 class HomePagingAdapter : PagedListAdapter<NewsResult, RecyclerView.ViewHolder>(DiffCallback) {
 
-//mothod of RecyclerView.Adapter
+//method of RecyclerView.Adapter
 
 }
 ```
 
 ## Step 4 : DataSource
-This is the base class for data loading. 
+This is the base class for data loading.
 DataSource can be implemented using these 3 classes:
-PageKeyedDataSource: When we need to load data based on the number of previous pages until all the pages are fetched and displayed.
 
-ItemKeyedDataSource: To define the key(N) that will be used to determine the next page(N+1) of data.
+PageKeyedDataSource : When we need to load data based on the number of previous pages until all the pages are fetched and displayed.
 
-PositionalDataSource: Can be fetched data with arbitrary positions and sizes.
+ItemKeyedDataSource : To define the key(N) that will be used to determine the next page(N+1) of data.
+
+PositionalDataSource : Can be fetched data with arbitrary positions and sizes.
 
 In this sample, we use PageKeyedDataSource. 
 
@@ -74,7 +79,7 @@ class PagingDataSource : PageKeyedDataSource<String, NewsResult>() {
 
     private val coroutineScope = CoroutineScope(Job() + Dispatchers.Main)
 
-//Hewe will load the data initially.
+//Here we load the initial data.
     override fun loadInitial(params: LoadInitialParams<String>, callback: LoadInitialCallback<String, NewsResult>) {
 
         coroutineScope.launch {
@@ -106,7 +111,7 @@ class PagingDataSource : PageKeyedDataSource<String, NewsResult>() {
         }
     }
     
-//Hewe will load the data after initial.
+//Here will load the data after initial.
     override fun loadAfter(params: LoadParams<String>, callback: LoadCallback<String, NewsResult>) {
 
         coroutineScope.launch {
