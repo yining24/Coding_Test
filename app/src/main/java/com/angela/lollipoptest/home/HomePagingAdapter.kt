@@ -66,14 +66,17 @@ class HomePagingAdapter : PagedListAdapter<News, RecyclerView.ViewHolder>(DiffCa
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val news = getItem(position)
+        news?.let {
             when (holder) {
                 is GridViewHolder -> {
-                    holder.bind(getItem(position) as News)
+                    holder.bind(news)
                 }
                 is FullViewHolder -> {
-                    holder.bind(getItem(position) as News)
+                    holder.bind(news)
                 }
             }
+        }
     }
 
 //    override fun getItemCount(): Int {

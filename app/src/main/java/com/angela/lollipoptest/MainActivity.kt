@@ -20,6 +20,7 @@ import com.angela.lollipoptest.home.HomePagingAdapter
 import com.angela.lollipoptest.home.HomeViewModel
 import com.angela.lollipoptest.network.LoadApiStatus
 import com.angela.lollipoptest.util.Logger
+import com.angela.lollipoptest.util.Utility
 
 class MainActivity : AppCompatActivity() {
 
@@ -80,6 +81,7 @@ class MainActivity : AppCompatActivity() {
         //1
         val config = PagedList.Config.Builder()
             .setPageSize(20)
+            .setPrefetchDistance(1)
             .setEnablePlaceholders(false)
             .build()
 
@@ -106,4 +108,16 @@ class MainActivity : AppCompatActivity() {
 
         return livePageListBuilder
     }
+
+    override fun onStart() {
+        super.onStart()
+        if (!Utility.isInternetConnected()) {
+            Toast.makeText(this,
+                            "請開啟網路連線", Toast.LENGTH_SHORT).show()
+            Logger.d("no network")
+        } else {
+            viewModel.deleteTable()
+        }
+    }
+
 }

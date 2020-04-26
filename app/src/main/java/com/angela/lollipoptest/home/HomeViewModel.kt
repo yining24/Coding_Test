@@ -3,7 +3,6 @@ package com.angela.lollipoptest.home
 import android.widget.Toast
 import androidx.lifecycle.*
 import androidx.paging.PagedList
-import androidx.paging.toLiveData
 import com.angela.lollipoptest.R
 import com.angela.lollipoptest.data.News
 import com.angela.lollipoptest.data.NewsResult
@@ -20,7 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.annotation.NonNull
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
+import com.angela.lollipoptest.util.Utility
 
 
 class HomeViewModel(private val repository: LollipopRepository) : ViewModel() {
@@ -149,6 +148,14 @@ class HomeViewModel(private val repository: LollipopRepository) : ViewModel() {
             }
             _refreshStatus.value = false
 
+        }
+
+    fun deleteTable() {
+
+        coroutineScope.launch {
+                Logger.w("deleteTable")
+                repository.deleteTable()
+            }
         }
     }
 
