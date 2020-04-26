@@ -172,11 +172,15 @@ class PagingDataSourceFactory : DataSource.Factory<String, NewsResult>() {
 
 ## Handle NetWork + Database: Android Architecture 
 Fetching data from API and saving in the database. Data in the database will be shown on RecyclerView.
+
 In this case, Paging library provides class BoundaryCallback to handle.
+
 BoundaryCallback has 3 callback method:
+
 1. onZeroItemsLoaded() : This is called when the database is empty. And trigger to fetch data from API.
 2. onItemAtFrontLoaded() : This is called when you want item is loaded and shown at the top.
 3. onItemAtEndLoaded(): This is called when item at the bottom is loaded and shown.
+
 Here we use onItemAtEndLoaded() to create Infinite scroll.
 
 ```kotlin
