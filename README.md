@@ -11,7 +11,6 @@ There are three class(Following will mention how to implement):
 2. PagedList 
 3. DataSource
 
-
 ## Step 1 : Add dependencies
 
 ```kotlin
@@ -167,6 +166,51 @@ class PagingDataSourceFactory : DataSource.Factory<String, NewsResult>() {
         val source = PagingDataSource()
         sourceLiveData.postValue(source)
         return source
+    }
+}
+```
+
+## Handle NetWork + Database: Android Architecture 
+Fetching data from API and saving in the database. Data in the database will be shown on RecyclerView.
+In this case, Paging library provides class BoundaryCallback to handle.
+BoundaryCallback has 3 callback method:
+1. onZeroItemsLoaded() : This is called when the database is empty. And trigger to fetch data from API.
+2. onItemAtFrontLoaded() : This is called when you want item is loaded and shown at the top.
+3. onItemAtEndLoaded(): This is called when item at the bottom is loaded and shown.
+Here we use onItemAtEndLoaded() to create Infinite scroll.
+
+```kotlin
+class BoundaryCallback(
+    private val repository: LollipopRepository
+) : PagedList.BoundaryCallback<News>() {
+
+    private val coroutineScope = CoroutineScope(Job() + Dispatchers.Main)
+    private var nextPage: String? = ""
+
+    override fun onZeroItemsLoaded() {
+        super.onZeroItemsLoaded()
+        coroutineScope.launch {
+            when (val result = repository.getNewsPage(nextPage ?: "")) {
+                is Result.Success -> {
+                 nextPage = result.data.newsPage.after
+                    val newsList = result.data.newsPage.newsPageList?.map { it.news }
+                    repository.insertNewsInLocal(newsList ?: listOf())
+                }
+            }
+        }
+    }
+
+    override fun onItemAtEndLoaded(itemAtEnd: News) {
+        super.onItemAtEndLoaded(itemAtEnd)
+        coroutineScope.launch {
+            when (val result = repository.getNewsPage(nextPage ?: "")) {
+                is Result.Success -> {
+                    nextPage = result.data.newsPage.after
+                    val newsList = result.data.newsPage.newsPageList?.map { it.news }
+                    repository.insertNewsInLocal(newsList ?: listOf())
+                }
+            }
+        }
     }
 }
 ```
