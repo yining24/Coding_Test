@@ -1,9 +1,8 @@
 package com.angela.lollipoptest.data.source
 
 import androidx.lifecycle.LiveData
-import com.angela.lollipoptest.data.HomeResult
+import com.angela.lollipoptest.data.NewsPageResult
 import com.angela.lollipoptest.data.News
-import com.angela.lollipoptest.data.NewsResult
 import com.angela.lollipoptest.data.Result
 
 /**
@@ -11,7 +10,7 @@ import com.angela.lollipoptest.data.Result
  */
 interface LollipopDataSource {
 
-    suspend fun getHome(after: String): Result<HomeResult>
+    suspend fun getNewsPage(after: String): Result<NewsPageResult>
 
     suspend fun insertNewsInLocal(news: List<News>)
 
@@ -19,5 +18,5 @@ interface LollipopDataSource {
 
     suspend fun deleteTable()
 
-    suspend fun postNewsInLocal()
+    suspend fun postNews()
 }

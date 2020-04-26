@@ -1,18 +1,15 @@
 package com.angela.lollipoptest.data.source.remote
 
 import androidx.lifecycle.LiveData
-import com.angela.lollipoptest.data.HomeResult
+import com.angela.lollipoptest.data.NewsPageResult
 import com.angela.lollipoptest.data.source.LollipopDataSource
 import com.angela.lollipoptest.network.LollipopApi
 import com.angela.lollipoptest.data.*
-import com.angela.lollipoptest.data.source.local.LollipopDatabase
 import com.angela.lollipoptest.util.Logger
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 object LollipopRemoteDataSource : LollipopDataSource {
 
-    override suspend fun getHome(after: String): Result<HomeResult> {
+    override suspend fun getNewsPage(after: String): Result<NewsPageResult> {
 
         val getResultDeferred = LollipopApi.retrofitService.getHome(after)
         return try {
@@ -41,7 +38,7 @@ object LollipopRemoteDataSource : LollipopDataSource {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override suspend fun postNewsInLocal() {
+    override suspend fun postNews() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 
     }

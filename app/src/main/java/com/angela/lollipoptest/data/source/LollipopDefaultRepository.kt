@@ -1,11 +1,9 @@
 package com.angela.lollipoptest.data.source
 
 import androidx.lifecycle.LiveData
-import com.angela.lollipoptest.data.HomeResult
+import com.angela.lollipoptest.data.NewsPageResult
 import com.angela.lollipoptest.data.News
-import com.angela.lollipoptest.data.NewsResult
 import com.angela.lollipoptest.data.Result
-import kotlinx.coroutines.CompletableDeferred
 
 /**
  * Concrete implementation to load Lollipop sources.
@@ -14,8 +12,8 @@ class LollipopDefaultRepository(
     private val lollipopRemoteDataSource: LollipopDataSource,
     private val lollipopLocalDataSource: LollipopDataSource
 ) : LollipopRepository {
-    override suspend fun getHome(after: String): Result<HomeResult>{
-        return lollipopRemoteDataSource.getHome(after)
+    override suspend fun getNewsPage(after: String): Result<NewsPageResult> {
+        return lollipopRemoteDataSource.getNewsPage(after)
     }
 
     override fun getNewsInLocal(): LiveData<List<News>> {
@@ -26,8 +24,8 @@ class LollipopDefaultRepository(
         return lollipopLocalDataSource.insertNewsInLocal(news)
     }
 
-    override suspend fun postNewsInLocal() {
-        return lollipopLocalDataSource.postNewsInLocal()
+    override suspend fun postNews() {
+        return lollipopLocalDataSource.postNews()
     }
 
     override suspend fun deleteTable() {

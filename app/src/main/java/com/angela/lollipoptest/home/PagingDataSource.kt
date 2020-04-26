@@ -8,7 +8,6 @@ import com.angela.lollipoptest.R
 import com.angela.lollipoptest.data.NewsResult
 import com.angela.lollipoptest.data.Result
 import com.angela.lollipoptest.network.LoadApiStatus
-import com.angela.lollipoptest.network.LollipopApi
 import com.angela.lollipoptest.network.LollipopApiService
 import com.angela.lollipoptest.util.Utility.getString
 import kotlinx.coroutines.CoroutineScope
@@ -41,17 +40,17 @@ class PagingDataSource(val api : LollipopApiService): PageKeyedDataSource<String
 
             _statusInitialLoad.value = LoadApiStatus.LOADING
 
-            val result = LollipopApplication.INSTANCE.lollipopRepository.getHome("")
+            val result = LollipopApplication.INSTANCE.lollipopRepository.getNewsPage("")
             when (result) {
                 is Result.Success -> {
                     _errorInitialLoad.value = null
                     _statusInitialLoad.value = LoadApiStatus.DONE
-//                    result.data.homeData.children?.forEach {
+//                    result.data.newsPage.newsPageList?.forEach {
 //                        LollipopApplication.INSTANCE.lollipopRepository.insertNewsInLocal(it.news)
 ////                        Logger.w("insertNewsInLocal(it.news):: ${it.news}")
 //                    }
-                    result.data.homeData.children?.let {
-                        callback.onResult(it, null, result.data.homeData.after) }
+                    result.data.newsPage.newsPageList?.let {
+                        callback.onResult(it, null, result.data.newsPage.after) }
                 }
                 is Result.Fail -> {
                     _errorInitialLoad.value = result.error
@@ -74,12 +73,12 @@ class PagingDataSource(val api : LollipopApiService): PageKeyedDataSource<String
         coroutineScope.launch {
             _statusInitialLoad.value = LoadApiStatus.LOADING
 
-            val result = LollipopApplication.INSTANCE.lollipopRepository.getHome(params.key)
+            val result = LollipopApplication.INSTANCE.lollipopRepository.getNewsPage(params.key)
             when (result) {
                 is Result.Success -> {
                     _statusInitialLoad.value = LoadApiStatus.DONE
-                    result.data.homeData.children?.let {
-                        callback.onResult(it, result.data.homeData.after) }
+                    result.data.newsPage.newsPageList?.let {
+                        callback.onResult(it, result.data.newsPage.after) }
                 }
             }
         }

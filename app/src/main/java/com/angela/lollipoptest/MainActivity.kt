@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
 //                    if (linearLayoutManager != null && linearLayoutManager.findLastVisibleItemPosition() == itemCount!! - 1) {
 //                        Logger.w("itemCount size = $itemCount")
 //
-//                        viewModel.getNews(false)
+//                        viewModel.getNewsPage(false)
 //
 //                        Toast.makeText(this@MainActivity,
 //                            "to the bottom!", Toast.LENGTH_SHORT).show()

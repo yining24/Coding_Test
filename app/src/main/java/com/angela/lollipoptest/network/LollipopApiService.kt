@@ -1,7 +1,7 @@
 package com.angela.lollipoptest.network
 
 import com.angela.lollipoptest.BuildConfig
-import com.angela.lollipoptest.data.HomeResult
+import com.angela.lollipoptest.data.NewsPageResult
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -45,7 +45,7 @@ private val retrofit = Retrofit.Builder()
 interface LollipopApiService {
     @GET(JSON_ROUTE)
     fun getHome(@Query("after") after: String? = null):
-            Deferred<HomeResult>
+            Deferred<NewsPageResult>
 }
 
 /**

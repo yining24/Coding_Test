@@ -1,24 +1,14 @@
 package com.angela.lollipoptest.home
 
 import androidx.paging.PagedList
-import com.angela.lollipoptest.LollipopApplication
 import com.angela.lollipoptest.data.News
-import com.angela.lollipoptest.data.NewsResult
 import com.angela.lollipoptest.data.source.LollipopRepository
-import com.angela.lollipoptest.data.source.local.LollipopDatabaseDao
-import com.angela.lollipoptest.network.LollipopApiService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import okhttp3.OkHttpClient
-import okhttp3.Request
 import com.angela.lollipoptest.data.Result
-import com.angela.lollipoptest.data.source.local.LollipopDatabase
-import com.angela.lollipoptest.network.LoadApiStatus
 import com.angela.lollipoptest.util.Logger
-import retrofit2.Retrofit
-import java.util.concurrent.Executors
 
 
 class HomeBoundaryCallback(
@@ -38,17 +28,17 @@ class HomeBoundaryCallback(
             Logger.w("onZeroItemsLoaded ing")
 
 
-            when (val result = repository.getHome(nextPage ?: "")) {
+            when (val result = repository.getNewsPage(nextPage ?: "")) {
                 is Result.Success -> {
                     Logger.w("onZeroItemsLoaded success")
 
-                    nextPage = result.data.homeData.after
+                    nextPage = result.data.newsPage.after
 
-                    val news = result.data.homeData.children?.map { it.news }
+                    val news = result.data.newsPage.newsPageList?.map { it.news }
 
                     repository.insertNewsInLocal(news ?: listOf())
 
-//                    result.data.homeData.children?.forEach {
+//                    result.data.newsPage.newsPageList?.forEach {
 //                        repository.insertNewsInLocal(it.news)
 //                    }
                 }
@@ -73,13 +63,13 @@ class HomeBoundaryCallback(
 
                 Logger.w("onItemAtEndLoaded ing")
 
-                when (val result = repository.getHome(nextPage ?: "")) {
+                when (val result = repository.getNewsPage(nextPage ?: "")) {
                     is Result.Success -> {
                         Logger.w("onItemAtEndLoaded success")
 
-                        nextPage = result.data.homeData.after
+                        nextPage = result.data.newsPage.after
 
-                        val news = result.data.homeData.children?.map { it.news }
+                        val news = result.data.newsPage.newsPageList?.map { it.news }
 
                         repository.insertNewsInLocal(news ?: listOf())
                     }

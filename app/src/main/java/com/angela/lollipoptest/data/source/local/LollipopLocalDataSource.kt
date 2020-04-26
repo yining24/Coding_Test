@@ -2,19 +2,17 @@ package com.angela.lollipoptest.data.source.local
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.angela.lollipoptest.data.HomeResult
+import com.angela.lollipoptest.data.NewsPageResult
 import com.angela.lollipoptest.data.News
-import com.angela.lollipoptest.data.NewsResult
 import com.angela.lollipoptest.data.Result
 import com.angela.lollipoptest.data.source.LollipopDataSource
-import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 
 class LollipopLocalDataSource(val context: Context) : LollipopDataSource {
 
-    override suspend fun getHome(after: String): Result<HomeResult>{
+    override suspend fun getNewsPage(after: String): Result<NewsPageResult> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
@@ -27,7 +25,8 @@ class LollipopLocalDataSource(val context: Context) : LollipopDataSource {
             LollipopDatabase.getInstance(context).lollipopDatabaseDao.insert(news)
         }
     }
-    override suspend fun postNewsInLocal() {
+
+    override suspend fun postNews() {
         withContext(Dispatchers.IO) {
             LollipopDatabase.getInstance(context).lollipopDatabaseDao.post()
         }
