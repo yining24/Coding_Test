@@ -1,7 +1,5 @@
 package com.angela.lollipoptest
 
-import android.app.Application
-import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
 import com.angela.lollipoptest.data.source.LollipopRepository
 import com.angela.lollipoptest.util.ServiceLocator

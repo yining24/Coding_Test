@@ -24,7 +24,7 @@ class LollipopDefaultRepository(
         return lollipopLocalDataSource.insertNewsInLocal(news)
     }
 
-    override suspend fun postNews() {
+    override fun postNews() {
         return lollipopLocalDataSource.postNews()
     }
 

@@ -18,6 +18,6 @@ interface LollipopRepository {
 
     suspend fun deleteTable()
 
-    suspend fun postNews()
+    fun postNews()
 
 }

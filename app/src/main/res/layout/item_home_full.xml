@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
             name="news"
             type="com.angela.lollipoptest.data.News" />
+
         <variable
             name="newsResult"
             type="com.angela.lollipoptest.data.NewsResult" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_home_full"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        android:id="@+id/layout_home_full"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/image_home_full"
@@ -41,8 +43,8 @@
             android:fontFamily="@font/noto_sans"
             android:shadowColor="@color/black"
             android:shadowDx="2"
-            android:shadowDy="3"
-            android:shadowRadius="3"
+            android:shadowDy="2"
+            android:shadowRadius="5"
             android:text="@{news.title}"
             android:textColor="@color/white"
             android:textSize="15sp"

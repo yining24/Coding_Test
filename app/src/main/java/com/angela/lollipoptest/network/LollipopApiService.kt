@@ -44,7 +44,7 @@ private val retrofit = Retrofit.Builder()
 
 interface LollipopApiService {
     @GET(JSON_ROUTE)
-    fun getHome(@Query("after") after: String? = null):
+    fun getNewsPage(@Query("after") after: String? = null):
             Deferred<NewsPageResult>
 }
 
@@ -52,5 +52,5 @@ interface LollipopApiService {
  * A public Api object that exposes the lazy-initialized Retrofit service
  */
 object LollipopApi {
-    val retrofitService : LollipopApiService by lazy { retrofit.create(LollipopApiService::class.java) }
+    val retrofitService: LollipopApiService by lazy { retrofit.create(LollipopApiService::class.java) }
 }

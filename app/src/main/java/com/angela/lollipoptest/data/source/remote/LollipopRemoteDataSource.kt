@@ -11,7 +11,7 @@ object LollipopRemoteDataSource : LollipopDataSource {
 
     override suspend fun getNewsPage(after: String): Result<NewsPageResult> {
 
-        val getResultDeferred = LollipopApi.retrofitService.getHome(after)
+        val getResultDeferred = LollipopApi.retrofitService.getNewsPage(after)
         return try {
             val listResult = getResultDeferred.await()
 
@@ -38,7 +38,7 @@ object LollipopRemoteDataSource : LollipopDataSource {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override suspend fun postNews() {
+    override fun postNews() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 
     }

@@ -4,11 +4,6 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import com.angela.lollipoptest.LollipopApplication
-import android.net.NetworkCapabilities
-import android.net.Network
-import android.os.Build
-import androidx.core.content.ContextCompat.getSystemService
-
 
 
 object Utility {

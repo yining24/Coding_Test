@@ -26,10 +26,8 @@ class LollipopLocalDataSource(val context: Context) : LollipopDataSource {
         }
     }
 
-    override suspend fun postNews() {
-        withContext(Dispatchers.IO) {
+    override fun postNews() {
             LollipopDatabase.getInstance(context).lollipopDatabaseDao.post()
-        }
     }
 
     override suspend fun deleteTable() {

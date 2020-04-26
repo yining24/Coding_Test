@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.angela.lollipoptest.data.News
 import com.angela.lollipoptest.databinding.ItemHomeFullBinding
@@ -17,13 +16,10 @@ private const val ITEM_POSITION_FULL = 5
 
 class HomePagingAdapter : PagedListAdapter<News, RecyclerView.ViewHolder>(DiffCallback) {
 
-//    private var newsList: List<News>? = null
-
     class FullViewHolder(private var binding: ItemHomeFullBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: News) {
-
             binding.news = item
             binding.executePendingBindings()
         }
@@ -78,15 +74,6 @@ class HomePagingAdapter : PagedListAdapter<News, RecyclerView.ViewHolder>(DiffCa
             }
         }
     }
-
-//    override fun getItemCount(): Int {
-//        return newsList?.size ?: 0
-//    }
-
-//    fun submitNews(news: List<News>) {
-//        this.newsList = news
-//        notifyDataSetChanged()
-//    }
 
     override fun getItemViewType(position: Int): Int {
         return if (position % ITEM_POSITION_FULL == 0) {

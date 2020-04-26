@@ -18,5 +18,5 @@ interface LollipopDataSource {
 
     suspend fun deleteTable()
 
-    suspend fun postNews()
+    fun postNews()
 }
