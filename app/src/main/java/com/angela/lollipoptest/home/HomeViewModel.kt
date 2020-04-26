@@ -1,5 +1,9 @@
 package com.angela.lollipoptest.home
 
+import android.app.Activity
+import android.app.Application
+import android.app.ApplicationErrorReport
+import android.content.Context
 import android.widget.Toast
 import androidx.lifecycle.*
 import androidx.paging.PagedList
@@ -19,15 +23,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.annotation.NonNull
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import androidx.paging.DataSource
+import androidx.paging.LivePagedListBuilder
+import com.angela.lollipoptest.LollipopApplication
+import com.angela.lollipoptest.data.source.local.LollipopDatabase
 import com.angela.lollipoptest.util.Utility
 
 
-class HomeViewModel(private val repository: LollipopRepository) : ViewModel() {
+class HomeViewModel(private val repository: LollipopRepository, pagingRepository: PagingRepository) : ViewModel() {
 
 //    private val sourceFactory = PagingDataSourceFactory()
 //val pagingDataNews: LiveData<PagedList<NewsResult>> = sourceFactory.toLiveData(1, null)
 
-//    val newsIn: LiveData<List<News>> = repository.getNewsInLocal()
+    val pagedListLiveData = pagingRepository.getDataItem(LollipopApplication.INSTANCE)
 
     var nextPage :String = ""
 //
@@ -89,66 +97,8 @@ class HomeViewModel(private val repository: LollipopRepository) : ViewModel() {
         Logger.i("[${this::class.simpleName}]${this}")
         Logger.i("------------------------------------")
 
-//        getNews(true)
 
     }
-
-
-    fun getNews(isInitial: Boolean = false) {
-
-        coroutineScope.launch {
-
-//            if (!Util.isInternetConnected()) {
-//                Toast.makeText(
-//                    LineTVApplication.INSTANCE.applicationContext,
-//                    getString(R.string.internet_not_connected),
-//                    Toast.LENGTH_SHORT
-//                ).show()
-//                if (isInitial) _status.value = LoadApiStatus.ERROR
-//
-//            } else {
-
-                if (isInitial) _status.value = LoadApiStatus.LOADING
-                // It will return Result object after Deferred flow
-
-                when (val result = repository.getHome(nextPage)) {
-                    is Result.Success -> {
-                        _error.value = null
-                        if (isInitial) {
-//                            repository.deleteTable()
-                            _status.value = LoadApiStatus.DONE
-                        }
-                        nextPage = result.data.homeData.after?:""
-
-                        val list = mutableListOf<News>()
-
-                        result.data.homeData.children?.forEach {
-                            list.add(it.news)
-                        }
-
-                        repository.insertNewsInLocal(list)
-
-//                        result.data.homeData.children?.forEach {
-//                            repository.insertNewsInLocal(it)
-//                        }
-                    }
-                    is Result.Fail -> {
-                        _error.value = result.error
-                        if (isInitial) _status.value = LoadApiStatus.ERROR
-                    }
-                    is Result.Error -> {
-                        _error.value = result.exception.toString()
-                        if (isInitial) _status.value = LoadApiStatus.ERROR
-                    }
-                    else -> {
-                        _error.value = getString(R.string.something_wrong)
-                        if (isInitial) _status.value = LoadApiStatus.ERROR
-                    }
-                }
-            }
-            _refreshStatus.value = false
-
-        }
 
     fun deleteTable() {
 
@@ -157,5 +107,34 @@ class HomeViewModel(private val repository: LollipopRepository) : ViewModel() {
                 repository.deleteTable()
             }
         }
+
     }
 
+
+class PagingRepository : PagingRepositoryCallback {
+
+    private lateinit var localDataSource: DataSource.Factory<Int, News>
+
+    override fun getDataItem(application: Application): LiveData<PagedList<News>> {
+
+        val pagedListLiveData: LiveData<PagedList<News>> by lazy {
+
+            localDataSource = LollipopDatabase.getInstance(application).lollipopDatabaseDao.post()
+
+            val config = PagedList.Config.Builder()
+                .setPageSize(25)
+                .setEnablePlaceholders(false)
+                .build()
+
+            LivePagedListBuilder(localDataSource, config)
+                .setBoundaryCallback(HomeBoundaryCallback(LollipopApplication.INSTANCE.lollipopRepository))
+                .build()
+        }
+
+        return pagedListLiveData
+    }
+}
+
+interface PagingRepositoryCallback {
+    fun getDataItem(application: Application): LiveData<PagedList<News>>
+}

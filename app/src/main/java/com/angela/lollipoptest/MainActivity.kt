@@ -1,11 +1,15 @@
 package com.angela.lollipoptest
 
+import android.app.Application
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import androidx.paging.DataSource
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +22,7 @@ import com.angela.lollipoptest.databinding.ActivityMainBinding
 import com.angela.lollipoptest.home.HomeBoundaryCallback
 import com.angela.lollipoptest.home.HomePagingAdapter
 import com.angela.lollipoptest.home.HomeViewModel
+import com.angela.lollipoptest.home.PagingRepository
 import com.angela.lollipoptest.network.LoadApiStatus
 import com.angela.lollipoptest.util.Logger
 import com.angela.lollipoptest.util.Utility
@@ -25,7 +30,7 @@ import com.angela.lollipoptest.util.Utility
 class MainActivity : AppCompatActivity() {
 
     private val viewModel by viewModels<HomeViewModel> {
-        ViewModelFactory((applicationContext as LollipopApplication).lollipopRepository)
+        ViewModelFactory((applicationContext as LollipopApplication).lollipopRepository,  PagingRepository())
     }
     private lateinit var binding: ActivityMainBinding
 
@@ -78,7 +83,7 @@ class MainActivity : AppCompatActivity() {
 //
 //        })
 
-        //1
+
         val config = PagedList.Config.Builder()
             .setPageSize(20)
             .setPrefetchDistance(1)
@@ -88,26 +93,49 @@ class MainActivity : AppCompatActivity() {
         //2
         val liveData = initializedPagedListBuilder(config).build()
 
-        //3
-        liveData.observe(this, Observer<PagedList<News>> { pagedList ->
-            adapter.submitList(pagedList)
+//        liveData.observe(this, Observer<PagedList<News>> { pagedList ->
+//            adapter.submitList(pagedList)
+//        })
+
+//        val newsLiveData = getDataItem()
+//
+//        newsLiveData.observe(this, Observer<PagedList<News>> { pagedList ->
+//            adapter.submitList(pagedList)
+//        })
+
+        viewModel.pagedListLiveData.observe(this, Observer {
+
+            adapter.submitList(it)
+
         })
 
 
     }
 
+
+
     private fun initializedPagedListBuilder(config: PagedList.Config):
             LivePagedListBuilder<Int, News> {
 
         val database = LollipopDatabase.getInstance(this)
-        val repository = LollipopApplication.INSTANCE.lollipopRepository
         val livePageListBuilder = LivePagedListBuilder<Int, News>(
-            database.lollipopDatabaseDao.post(), config)
-
-        livePageListBuilder.setBoundaryCallback(HomeBoundaryCallback(repository))
-
-        return livePageListBuilder
+            database.lollipopDatabaseDao.post(),
+            config)
+        return livePageListBuilder.setBoundaryCallback(HomeBoundaryCallback(LollipopApplication.INSTANCE.lollipopRepository))
     }
+
+//    private fun initializedPagedListBuilder(config: PagedList.Config):
+//            LivePagedListBuilder<Int, News> {
+//
+//        val database = LollipopDatabase.getInstance(this)
+//        val repository = LollipopApplication.INSTANCE.lollipopRepository
+//        val livePageListBuilder = LivePagedListBuilder<Int, News>(
+//            database.lollipopDatabaseDao.post(), config)
+//
+//        livePageListBuilder.setBoundaryCallback(HomeBoundaryCallback(repository))
+//
+//        return livePageListBuilder
+//    }
 
     override fun onStart() {
         super.onStart()
@@ -118,6 +146,27 @@ class MainActivity : AppCompatActivity() {
         } else {
             viewModel.deleteTable()
         }
+    }
+
+    fun getDataItem(): LiveData<PagedList<News>> {
+
+        val pagedListLiveData: LiveData<PagedList<News>> by lazy {
+
+            val localDataSource =
+                LollipopDatabase.getInstance(this).lollipopDatabaseDao.post()
+
+
+            val config = PagedList.Config.Builder()
+                .setPageSize(25)
+                .setEnablePlaceholders(false)
+                .build()
+
+            LivePagedListBuilder(localDataSource, config)
+                .setBoundaryCallback(HomeBoundaryCallback(LollipopApplication.INSTANCE.lollipopRepository))
+                .build()
+        }
+
+        return pagedListLiveData
     }
 
 }

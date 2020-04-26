@@ -1,6 +1,7 @@
 package com.angela.lollipoptest.home
 
 import androidx.paging.PagedList
+import com.angela.lollipoptest.LollipopApplication
 import com.angela.lollipoptest.data.News
 import com.angela.lollipoptest.data.NewsResult
 import com.angela.lollipoptest.data.source.LollipopRepository
@@ -14,6 +15,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import com.angela.lollipoptest.data.Result
 import com.angela.lollipoptest.data.source.local.LollipopDatabase
+import com.angela.lollipoptest.network.LoadApiStatus
 import com.angela.lollipoptest.util.Logger
 import retrofit2.Retrofit
 import java.util.concurrent.Executors
@@ -66,6 +68,7 @@ class HomeBoundaryCallback(
         override fun onItemAtEndLoaded(itemAtEnd: News) {
             super.onItemAtEndLoaded(itemAtEnd)
 
+
             coroutineScope.launch {
 
                 Logger.w("onItemAtEndLoaded ing")
@@ -91,6 +94,7 @@ class HomeBoundaryCallback(
                     }
                 }
             }
+
             }
         }
 
