@@ -172,7 +172,6 @@ class PagingDataSourceFactory : DataSource.Factory<String, NewsResult>() {
 
 ## Handle NetWork + Database: Android Architecture 
 Fetching data from API and saving in the database. Data in the database will be shown on RecyclerView.
-
 In this case, Paging library provides class BoundaryCallback to handle.
 
 BoundaryCallback has 3 callback method:
@@ -219,7 +218,7 @@ class BoundaryCallback(
 }
 ```
 
-That's all! When the scroll reaches the bottom, Paging will automatically download more data to show.
+That's all!  When the scroll reaches the bottom, Paging will automatically download more data to show.
 You can add progress bar in xml. for showing loading status.
 
-Hope this file will help:)
+Hope this file will help :)
