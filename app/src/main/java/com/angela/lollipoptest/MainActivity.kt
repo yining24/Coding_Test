@@ -6,14 +6,12 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.paging.LivePagedListBuilder
-import androidx.paging.PagedList
-import com.angela.lollipoptest.data.News
-import com.angela.lollipoptest.data.source.local.LollipopDatabase
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.angela.lollipoptest.databinding.ActivityMainBinding
-import com.angela.lollipoptest.home.HomeBoundaryCallback
-import com.angela.lollipoptest.home.HomePagingAdapter
-import com.angela.lollipoptest.home.HomeViewModel
+import com.angela.lollipoptest.network.LoadApiStatus
+import com.angela.lollipoptest.newspage.HomeViewModel
+import com.angela.lollipoptest.newspage.NewsAdapter
 import com.angela.lollipoptest.util.Logger
 import com.angela.lollipoptest.util.Utility
 
@@ -32,53 +30,75 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        val adapter = HomePagingAdapter()
+        val adapter = NewsAdapter()
         binding.recyclerHome.adapter = adapter
 
-        val config = PagedList.Config.Builder()
-            .setPageSize(50)
-            .setPrefetchDistance(1)
-            .setEnablePlaceholders(false)
-            .build()
 
-        val newsLiveData = initializedPagedListBuilder(config).build()
+        binding.recyclerHome.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
 
-        newsLiveData.observe(this, Observer<PagedList<News>> { pagedList ->
-            adapter.submitList(pagedList)
+                val linearLayoutManager = recyclerView.layoutManager as LinearLayoutManager
+                val visibleItemCount = linearLayoutManager.childCount
+                val pastVisiblePostion = linearLayoutManager.findFirstCompletelyVisibleItemPosition()
+                val total = adapter.itemCount
+
+
+                if (viewModel.status.value != LoadApiStatus.LOADING) {
+                    if ( visibleItemCount + pastVisiblePostion >= total) {
+                        Logger.w("total itemCount size = $total")
+
+                        viewModel.getNews(false)
+                        adapter.notifyDataSetChanged()
+                    }
+                }
+            }
+
         })
+
+        viewModel.newsInLocal.observe(this, Observer {
+            adapter.submitList(it)
+
+            Logger.w("viewModel.newsInLocal.observe =====$it")
+        })
+
+
 
         viewModel.status.observe(this, Observer {
             Logger.w("status change $it")
         })
 
 
+
+
     }
 
-    override fun onStart() {
-        super.onStart()
-        if (!Utility.isInternetConnected()) {
-            Toast.makeText(
-                this,
-                "請開啟網路連線", Toast.LENGTH_SHORT
-            ).show()
-            Logger.d("no network")
-        } else {
-            viewModel.deleteTable()
-        }
-    }
+//    override fun onStart() {
+//        super.onStart()
+//        if (!Utility.isInternetConnected()) {
+//            Toast.makeText(
+//                this,
+//                "請開啟網路連線", Toast.LENGTH_SHORT
+//            ).show()
+//            Logger.d("no network")
+//        } else {
+//            viewModel.getNews(true)
+//        }
+//    }
 
-    private fun initializedPagedListBuilder(config: PagedList.Config):
-            LivePagedListBuilder<Int, News> {
 
-        val database = LollipopDatabase.getInstance(this)
-        val repository = LollipopApplication.INSTANCE.lollipopRepository
-        val livePageListBuilder = LivePagedListBuilder<Int, News>(
-            database.lollipopDatabaseDao.post(), config
-        )
-
-        livePageListBuilder.setBoundaryCallback(HomeBoundaryCallback(repository, viewModel))
-
-        return livePageListBuilder
-    }
+//    private fun initializedPagedListBuilder(config: PagedList.Config):
+//            LivePagedListBuilder<Int, News> {
+//
+//        val database = LollipopDatabase.getInstance(this)
+//        val repository = LollipopApplication.INSTANCE.lollipopRepository
+//        val livePageListBuilder = LivePagedListBuilder<Int, News>(
+//            database.lollipopDatabaseDao.post(), config
+//        )
+//
+//        livePageListBuilder.setBoundaryCallback(HomeBoundaryCallback(repository, viewModel))
+//
+//        return livePageListBuilder
+//    }
 }
 

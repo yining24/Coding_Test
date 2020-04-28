@@ -10,5 +10,5 @@ data class NewsPage (
     @Json(name = "children")
     val newsPageList: List<NewsResult>? = null,
     @Json(name = "after")
-    val after: String? = null
+    val after: String? = ""
 ) : Parcelable

@@ -3,6 +3,7 @@ package com.angela.lollipoptest.util
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
+import androidx.lifecycle.MutableLiveData
 import com.angela.lollipoptest.LollipopApplication
 
 

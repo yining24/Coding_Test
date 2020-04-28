@@ -3,7 +3,7 @@ package com.angela.lollipoptest
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.angela.lollipoptest.data.source.LollipopRepository
-import com.angela.lollipoptest.home.HomeViewModel
+import com.angela.lollipoptest.newspage.HomeViewModel
 
 
 /**
