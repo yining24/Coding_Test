@@ -8,7 +8,7 @@
 //
 ///**
 // * Paging library DataSource factory sample
-// * For delivering liveData to HomeViewModel
+// * For delivering liveData to NewsViewModel
 // *
 // */
 //class PagingDataSourceFactory(private val repository: LollipopRepository) : DataSource.Factory<String, NewsResult>() {

@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.angela.lollipoptest.data.News
-import com.angela.lollipoptest.databinding.ItemHomeFullBinding
-import com.angela.lollipoptest.databinding.ItemHomeGridBinding
+import com.angela.lollipoptest.databinding.ItemNewsFullBinding
+import com.angela.lollipoptest.databinding.ItemNewsGridBinding
 
 
 private const val ITEM_VIEW_TYPE_GRID = 1
@@ -19,7 +19,7 @@ class NewsAdapter : ListAdapter<News, RecyclerView.ViewHolder>(DiffCallback) {
 
     private var newsList: MutableList<News>? = null
 
-    class FullViewHolder(private var binding: ItemHomeFullBinding) :
+    class FullViewHolder(private var binding: ItemNewsFullBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: News) {
@@ -28,7 +28,7 @@ class NewsAdapter : ListAdapter<News, RecyclerView.ViewHolder>(DiffCallback) {
         }
     }
 
-    class GridViewHolder(private var binding: ItemHomeGridBinding) :
+    class GridViewHolder(private var binding: ItemNewsGridBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: News) {
@@ -51,12 +51,12 @@ class NewsAdapter : ListAdapter<News, RecyclerView.ViewHolder>(DiffCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             ITEM_VIEW_TYPE_GRID -> GridViewHolder(
-                ItemHomeGridBinding.inflate(
+                ItemNewsGridBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
                 )
             )
             ITEM_VIEW_TYPE_FULL -> FullViewHolder(
-                ItemHomeFullBinding.inflate(
+                ItemNewsFullBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
                 )
             )

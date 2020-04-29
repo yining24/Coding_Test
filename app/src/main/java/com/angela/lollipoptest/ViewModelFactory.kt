@@ -3,7 +3,7 @@ package com.angela.lollipoptest
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.angela.lollipoptest.data.source.LollipopRepository
-import com.angela.lollipoptest.newspage.HomeViewModel
+import com.angela.lollipoptest.newspage.NewsViewModel
 
 
 /**
@@ -17,8 +17,8 @@ class ViewModelFactory constructor(
     override fun <T : ViewModel> create(modelClass: Class<T>) =
         with(modelClass) {
             when {
-                isAssignableFrom(HomeViewModel::class.java) ->
-                    HomeViewModel(lollipopRepository)
+                isAssignableFrom(NewsViewModel::class.java) ->
+                    NewsViewModel(lollipopRepository)
 
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

@@ -13,7 +13,7 @@
 //
 //class HomeBoundaryCallback(
 //    private val repository: LollipopRepository,
-//    private val viewModel: HomeViewModel
+//    private val viewModel: NewsViewModel
 //) : PagedList.BoundaryCallback<News>() {
 //
 //    private val coroutineScope = CoroutineScope(Job() + Dispatchers.Main)

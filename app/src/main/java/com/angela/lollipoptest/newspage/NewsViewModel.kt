@@ -19,15 +19,13 @@ import com.angela.lollipoptest.util.Utility
 import com.angela.lollipoptest.util.Utility.getString
 
 
-class HomeViewModel(private val repository: LollipopRepository) : ViewModel() {
+class NewsViewModel(private val repository: LollipopRepository) : ViewModel() {
 
     val newsInLocal = repository.getNewsInLocal()
 
-    var nextPage : String = ""
+    var nextPage: String = ""
 
-    val isInternetConnected = Utility.isInternetConnected()
-
-
+    val isInternetConnected = MutableLiveData<Boolean>()
 
 
     private val _status = MutableLiveData<LoadApiStatus>()
@@ -61,28 +59,23 @@ class HomeViewModel(private val repository: LollipopRepository) : ViewModel() {
         Logger.i("------------------------------------")
         Logger.i("[${this::class.simpleName}]${this}")
         Logger.i("------------------------------------")
-
-        getNews(true)
     }
 
     fun getNews(isInitial: Boolean = false) {
 
-        if (!Utility.isInternetConnected()) Logger.d("connect false") else Logger.i("connect true")
+        if (!Utility.isInternetConnected()) {
+            _status.value = LoadApiStatus.ERROR
+            isInternetConnected.value = false
+        } else {
+            coroutineScope.launch {
 
-        coroutineScope.launch {
+                if (isInitial) {
+                    deleteTable()
+                    nextPage = ""
+                }
 
-            if (!Utility.isInternetConnected()) {
-                Toast.makeText(
-                    LollipopApplication.INSTANCE.applicationContext,
-                    getString(R.string.internet_not_connected),
-                    Toast.LENGTH_SHORT
-                ).show()
-
-            } else {
-
-                if (isInitial) deleteTable()
-
-                _status.value = LoadApiStatus.LOADING
+                if (refreshStatus.value != true) _status.value = LoadApiStatus.LOADING
+                Logger.d("refreshStatus=======${refreshStatus.value}")
 
                 when (val result = repository.getNewsPage(nextPage)) {
                     is Result.Success -> {
@@ -128,12 +121,12 @@ class HomeViewModel(private val repository: LollipopRepository) : ViewModel() {
         }
     }
 
-    fun showLoading() {
-        _status.value = LoadApiStatus.LOADING
+    fun refresh() {
+        if (status.value != LoadApiStatus.LOADING) {
+            _refreshStatus.value = true
+            getNews(true)
+        }
     }
 
-    fun finishLoading() {
-        _status.value = LoadApiStatus.DONE
-    }
 }
 

@@ -14,12 +14,12 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_home_full"
+        android:id="@+id/layout_news_full"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/image_home_full"
+            android:id="@+id/image_news_full"
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:layout_marginTop="4dp"
@@ -33,7 +33,7 @@
             tools:src="@color/white" />
 
         <TextView
-            android:id="@+id/title_home_full"
+            android:id="@+id/title_news_full"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -48,13 +48,13 @@
             android:text="@{news.title}"
             android:textColor="@color/white"
             android:textSize="15sp"
-            app:layout_constraintBottom_toBottomOf="@+id/image_home_full"
+            app:layout_constraintBottom_toBottomOf="@+id/image_news_full"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:text="title of home full" />
+            tools:text="title of news full" />
 
         <View
-            android:id="@+id/line_home_full"
+            android:id="@+id/line_news_full"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/gray_light"

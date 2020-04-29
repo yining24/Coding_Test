@@ -10,15 +10,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.angela.lollipoptest.databinding.ActivityMainBinding
 import com.angela.lollipoptest.network.LoadApiStatus
-import com.angela.lollipoptest.newspage.HomeViewModel
+import com.angela.lollipoptest.newspage.NewsViewModel
 import com.angela.lollipoptest.newspage.NewsAdapter
 import com.angela.lollipoptest.util.Logger
-import com.angela.lollipoptest.util.Utility
 
 
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel by viewModels<HomeViewModel> {
+    private val viewModel by viewModels<NewsViewModel> {
         ViewModelFactory((applicationContext as LollipopApplication).lollipopRepository)
     }
     private lateinit var binding: ActivityMainBinding
@@ -31,10 +30,10 @@ class MainActivity : AppCompatActivity() {
         binding.viewModel = viewModel
 
         val adapter = NewsAdapter()
-        binding.recyclerHome.adapter = adapter
+        binding.recyclerNews.adapter = adapter
 
 
-        binding.recyclerHome.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+        binding.recyclerNews.addOnScrollListener(object : RecyclerView.OnScrollListener(){
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
@@ -45,7 +44,7 @@ class MainActivity : AppCompatActivity() {
 
 
                 if (viewModel.status.value != LoadApiStatus.LOADING) {
-                    if ( visibleItemCount + pastVisiblePostion >= total) {
+                    if ( visibleItemCount + pastVisiblePostion >= total -1) {
                         Logger.w("total itemCount size = $total")
 
                         viewModel.getNews(false)
@@ -68,23 +67,38 @@ class MainActivity : AppCompatActivity() {
             Logger.w("status change $it")
         })
 
+        binding.layoutSwipeRefreshNews.setOnRefreshListener {
+            viewModel.refresh()
+        }
+
+        viewModel.refreshStatus.observe(this, Observer {
+            it?.let {
+                binding.layoutSwipeRefreshNews.isRefreshing = it
+                Logger.d("viewModel.refreshStatus=======${it}")
+
+            }
+        })
+
+        viewModel.isInternetConnected.observe(this, Observer {
+            if (it == false) {
+                Toast.makeText(
+                    this,
+                    getString(R.string.internet_not_connected), Toast.LENGTH_LONG
+                ).show()
+                viewModel.isInternetConnected.value = null
+            }
+            Logger.w("isInternetConnected === $it")
+        })
+
 
 
 
     }
 
-//    override fun onStart() {
-//        super.onStart()
-//        if (!Utility.isInternetConnected()) {
-//            Toast.makeText(
-//                this,
-//                "請開啟網路連線", Toast.LENGTH_SHORT
-//            ).show()
-//            Logger.d("no network")
-//        } else {
-//            viewModel.getNews(true)
-//        }
-//    }
+    override fun onStart() {
+        super.onStart()
+            viewModel.getNews(true)
+    }
 
 
 //    private fun initializedPagedListBuilder(config: PagedList.Config):
