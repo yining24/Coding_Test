@@ -160,7 +160,7 @@ class NewsViewModel(private val repository: LollipopRepository) : ViewModel() {
 ```
 
 
-That's all!  When the scroll reaches the bottom, Paging will automatically download more data to show.
-You can add progress bar in xml. for showing loading status.
+That's all!  When the scroll reaches the bottom, View will observe that and let Model to download more data to show.
+We also add Progress bar and SwipeRefreshLayout in xml. to display loading status.
 
 Hope this file will help :)
