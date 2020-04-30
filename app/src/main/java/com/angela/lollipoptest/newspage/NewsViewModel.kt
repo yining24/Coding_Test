@@ -108,8 +108,8 @@ class NewsViewModel(private val repository: LollipopRepository) : ViewModel() {
                         _status.value = LoadApiStatus.ERROR
                     }
                 }
+                _refreshStatus.value = false
             }
-            _refreshStatus.value = false
         }
     }
 

@@ -16,7 +16,6 @@ android {
         applicationId "com.angela.lollipoptest"
         minSdkVersion 19
         targetSdkVersion 29
-        multiDexEnabled true
         versionCode 1
         versionName "1.0"
     }
@@ -65,13 +64,13 @@ dependencies {
     kapt "com.github.bumptech.glide:compiler:$version_glide"
 
     implementation "androidx.recyclerview:recyclerview:$version_recyclerview"
-    implementation 'com.squareup.okhttp3:okhttp:4.0.1'
     implementation "com.github.bumptech.glide:glide:$version_glide"
     kapt "com.github.bumptech.glide:compiler:$version_glide"
     implementation "androidx.fragment:fragment:$version_fragment"
     implementation "androidx.fragment:fragment-testing:$version_fragment"
     // Paging
     implementation "androidx.paging:paging-runtime:2.1.0"
-    implementation 'com.android.support:multidex:1.0.3'
-    implementation "com.squareup.okhttp3:logging-interceptor:4.0.1"
+
+    implementation 'com.squareup.okhttp3:okhttp:3.12.2'
+    implementation "com.squareup.okhttp3:logging-interceptor:3.12.2"
 }

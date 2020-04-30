@@ -4,12 +4,10 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.TypeConverters
-import com.angela.lollipoptest.data.source.local.LollipopConverters
 import com.squareup.moshi.Json
 import kotlinx.android.parcel.Parcelize
 
 @Entity(tableName = "news_in_table", primaryKeys = ["news_id"])
-@TypeConverters(LollipopConverters::class)
 @Parcelize
 data class News (
     @ColumnInfo(name = "news_title")

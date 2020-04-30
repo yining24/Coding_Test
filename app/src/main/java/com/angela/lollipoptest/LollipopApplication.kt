@@ -1,11 +1,11 @@
 package com.angela.lollipoptest
 
-import androidx.multidex.MultiDexApplication
+import android.app.Application
 import com.angela.lollipoptest.data.source.LollipopRepository
 import com.angela.lollipoptest.util.ServiceLocator
 import kotlin.properties.Delegates
 
-class LollipopApplication : MultiDexApplication() {
+class LollipopApplication : Application() {
 
     val lollipopRepository: LollipopRepository
         get() = ServiceLocator.provideTasksRepository(this)

@@ -28,16 +28,20 @@ fun bindRecyclerViewWithNews(recyclerView: RecyclerView, newsList: List<News>?) 
  */
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {
-    imgUrl?.let {
-        val imgUri = it.toUri().buildUpon().build()
-        GlideApp.with(imgView.context)
-            .load(imgUri)
-            .apply(
-                RequestOptions()
-                    .placeholder(R.color.transparent)
-                    .error(R.color.transparent)
-            )
-            .into(imgView)
+    if (imgUrl == "self") {
+        imgView.setImageResource(R.color.transparent)
+    } else {
+        imgUrl?.let {
+            val imgUri = it.toUri().buildUpon().build()
+            GlideApp.with(imgView.context)
+                .load(imgUri)
+                .apply(
+                    RequestOptions()
+                        .placeholder(R.color.transparent)
+                        .error(R.color.transparent)
+                )
+                .into(imgView)
+        }
     }
 }
 
