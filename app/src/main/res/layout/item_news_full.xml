@@ -33,21 +33,19 @@
             tools:src="@color/white" />
 
         <TextView
+            style="@style/textNewsTitle"
             android:id="@+id/title_news_full"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="4dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/noto_sans"
             android:shadowColor="@color/black"
             android:shadowDx="2"
             android:shadowDy="2"
             android:shadowRadius="5"
             android:text="@{news.title}"
             android:textColor="@color/white"
-            android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="@+id/image_news_full"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

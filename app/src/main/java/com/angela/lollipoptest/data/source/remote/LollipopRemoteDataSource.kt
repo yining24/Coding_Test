@@ -1,10 +1,11 @@
 package com.angela.lollipoptest.data.source.remote
 
 import androidx.lifecycle.LiveData
+import com.angela.lollipoptest.data.News
 import com.angela.lollipoptest.data.NewsPageResult
+import com.angela.lollipoptest.data.Result
 import com.angela.lollipoptest.data.source.LollipopDataSource
 import com.angela.lollipoptest.network.LollipopApi
-import com.angela.lollipoptest.data.*
 import com.angela.lollipoptest.util.Logger
 
 object LollipopRemoteDataSource : LollipopDataSource {
@@ -38,9 +39,5 @@ object LollipopRemoteDataSource : LollipopDataSource {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun postNews() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-
-    }
 }
 

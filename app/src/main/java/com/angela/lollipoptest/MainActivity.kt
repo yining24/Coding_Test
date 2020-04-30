@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerNews.adapter = adapter
 
 
-        binding.recyclerNews.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+        binding.recyclerNews.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
@@ -42,9 +42,8 @@ class MainActivity : AppCompatActivity() {
                 val pastVisiblePostion = linearLayoutManager.findFirstCompletelyVisibleItemPosition()
                 val total = adapter.itemCount
 
-
                 if (viewModel.status.value != LoadApiStatus.LOADING) {
-                    if ( visibleItemCount + pastVisiblePostion >= total -1) {
+                    if (visibleItemCount + pastVisiblePostion >= total - 1) {
                         Logger.w("total itemCount size = $total")
 
                         viewModel.getNews(false)
@@ -52,19 +51,14 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-
         })
 
         viewModel.newsInLocal.observe(this, Observer {
             adapter.submitList(it)
-
-            Logger.w("viewModel.newsInLocal.observe =====$it")
         })
 
-
-
         viewModel.status.observe(this, Observer {
-            Logger.w("status change $it")
+            Logger.w("status change to $it")
         })
 
         binding.layoutSwipeRefreshNews.setOnRefreshListener {
@@ -74,8 +68,6 @@ class MainActivity : AppCompatActivity() {
         viewModel.refreshStatus.observe(this, Observer {
             it?.let {
                 binding.layoutSwipeRefreshNews.isRefreshing = it
-                Logger.d("viewModel.refreshStatus=======${it}")
-
             }
         })
 
@@ -90,29 +82,11 @@ class MainActivity : AppCompatActivity() {
             Logger.w("isInternetConnected === $it")
         })
 
-
-
-
     }
 
     override fun onStart() {
         super.onStart()
-            viewModel.getNews(true)
+        viewModel.getNews(true)
     }
-
-
-//    private fun initializedPagedListBuilder(config: PagedList.Config):
-//            LivePagedListBuilder<Int, News> {
-//
-//        val database = LollipopDatabase.getInstance(this)
-//        val repository = LollipopApplication.INSTANCE.lollipopRepository
-//        val livePageListBuilder = LivePagedListBuilder<Int, News>(
-//            database.lollipopDatabaseDao.post(), config
-//        )
-//
-//        livePageListBuilder.setBoundaryCallback(HomeBoundaryCallback(repository, viewModel))
-//
-//        return livePageListBuilder
-//    }
 }
 

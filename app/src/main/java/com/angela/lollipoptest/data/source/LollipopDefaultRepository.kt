@@ -1,8 +1,8 @@
 package com.angela.lollipoptest.data.source
 
 import androidx.lifecycle.LiveData
-import com.angela.lollipoptest.data.NewsPageResult
 import com.angela.lollipoptest.data.News
+import com.angela.lollipoptest.data.NewsPageResult
 import com.angela.lollipoptest.data.Result
 
 /**
@@ -22,10 +22,6 @@ class LollipopDefaultRepository(
 
     override suspend fun insertNewsInLocal(news: List<News>) {
         return lollipopLocalDataSource.insertNewsInLocal(news)
-    }
-
-    override fun postNews() {
-        return lollipopLocalDataSource.postNews()
     }
 
     override suspend fun deleteTable() {

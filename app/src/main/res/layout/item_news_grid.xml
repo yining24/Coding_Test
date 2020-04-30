@@ -28,17 +28,15 @@
             tools:src="@color/gray_dark" />
 
         <TextView
+            style="@style/textNewsTitle"
             android:id="@+id/title_news_grid"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/noto_sans"
             android:text="@{news.title}"
             android:textColor="@color/black"
-            android:textSize="15sp"
             app:layout_constraintEnd_toStartOf="@+id/image_news_grid"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

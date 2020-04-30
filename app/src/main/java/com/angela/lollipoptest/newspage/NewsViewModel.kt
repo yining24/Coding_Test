@@ -1,22 +1,18 @@
 package com.angela.lollipoptest.newspage
 
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.angela.lollipoptest.LollipopApplication
-import com.angela.lollipoptest.R
 import com.angela.lollipoptest.data.News
+import com.angela.lollipoptest.data.Result
 import com.angela.lollipoptest.data.source.LollipopRepository
 import com.angela.lollipoptest.network.LoadApiStatus
 import com.angela.lollipoptest.util.Logger
+import com.angela.lollipoptest.util.Utility
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import com.angela.lollipoptest.data.Result
-import com.angela.lollipoptest.util.Utility
-import com.angela.lollipoptest.util.Utility.getString
 
 
 class NewsViewModel(private val repository: LollipopRepository) : ViewModel() {
@@ -27,28 +23,19 @@ class NewsViewModel(private val repository: LollipopRepository) : ViewModel() {
 
     val isInternetConnected = MutableLiveData<Boolean>()
 
-
     private val _status = MutableLiveData<LoadApiStatus>()
 
     val status: LiveData<LoadApiStatus>
         get() = _status
 
-    private val _error = MutableLiveData<String>()
-
-    val error: LiveData<String>
-        get() = _error
-
-    // status for the loading icon of swl
     private val _refreshStatus = MutableLiveData<Boolean>()
 
     val refreshStatus: LiveData<Boolean>
         get() = _refreshStatus
 
-
     private var viewModelJob = Job()
 
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-
 
     override fun onCleared() {
         super.onCleared()
@@ -73,14 +60,10 @@ class NewsViewModel(private val repository: LollipopRepository) : ViewModel() {
                     deleteTable()
                     nextPage = ""
                 }
-
                 if (refreshStatus.value != true) _status.value = LoadApiStatus.LOADING
-                Logger.d("refreshStatus=======${refreshStatus.value}")
 
                 when (val result = repository.getNewsPage(nextPage)) {
                     is Result.Success -> {
-
-                        _error.value = null
                         _status.value = LoadApiStatus.DONE
 
                         nextPage = result.data.newsPage.after ?: ""
@@ -90,21 +73,14 @@ class NewsViewModel(private val repository: LollipopRepository) : ViewModel() {
                             list.add(it.news)
                         }
                         repository.insertNewsInLocal(list)
-
-//                        result.data.homeData.children?.forEach {
-//                            repository.insertNewsInLocal(it.news)
-//                        }
                     }
                     is Result.Fail -> {
-                        _error.value = result.error
                         _status.value = LoadApiStatus.ERROR
                     }
                     is Result.Error -> {
-                        _error.value = result.exception.toString()
                         _status.value = LoadApiStatus.ERROR
                     }
                     else -> {
-                        _error.value = getString(R.string.something_wrong)
                         _status.value = LoadApiStatus.ERROR
                     }
                 }
@@ -113,10 +89,8 @@ class NewsViewModel(private val repository: LollipopRepository) : ViewModel() {
         }
     }
 
-
-    fun deleteTable() {
+    private fun deleteTable() {
         coroutineScope.launch {
-            Logger.w("deleteTable")
             repository.deleteTable()
         }
     }
@@ -127,6 +101,5 @@ class NewsViewModel(private val repository: LollipopRepository) : ViewModel() {
             getNews(true)
         }
     }
-
 }
 

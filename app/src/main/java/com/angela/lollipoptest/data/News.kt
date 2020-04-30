@@ -3,13 +3,12 @@ package com.angela.lollipoptest.data
 import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.TypeConverters
 import com.squareup.moshi.Json
 import kotlinx.android.parcel.Parcelize
 
 @Entity(tableName = "news_in_table", primaryKeys = ["news_id"])
 @Parcelize
-data class News (
+data class News(
     @ColumnInfo(name = "news_title")
     @Json(name = "title")
     val title: String,

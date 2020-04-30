@@ -2,8 +2,8 @@ package com.angela.lollipoptest.data.source.local
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.angela.lollipoptest.data.NewsPageResult
 import com.angela.lollipoptest.data.News
+import com.angela.lollipoptest.data.NewsPageResult
 import com.angela.lollipoptest.data.Result
 import com.angela.lollipoptest.data.source.LollipopDataSource
 import kotlinx.coroutines.Dispatchers
@@ -24,10 +24,6 @@ class LollipopLocalDataSource(val context: Context) : LollipopDataSource {
         withContext(Dispatchers.IO) {
             LollipopDatabase.getInstance(context).lollipopDatabaseDao.insert(news)
         }
-    }
-
-    override fun postNews() {
-            LollipopDatabase.getInstance(context).lollipopDatabaseDao.post()
     }
 
     override suspend fun deleteTable() {

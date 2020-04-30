@@ -2,7 +2,6 @@ package com.angela.lollipoptest.newspage
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -16,8 +15,6 @@ private const val ITEM_VIEW_TYPE_FULL = 2
 private const val ITEM_POSITION_FULL = 5
 
 class NewsAdapter : ListAdapter<News, RecyclerView.ViewHolder>(DiffCallback) {
-
-    private var newsList: MutableList<News>? = null
 
     class FullViewHolder(private var binding: ItemNewsFullBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -83,14 +80,5 @@ class NewsAdapter : ListAdapter<News, RecyclerView.ViewHolder>(DiffCallback) {
             ITEM_VIEW_TYPE_FULL
         } else ITEM_VIEW_TYPE_GRID
     }
-
-//        override fun getItemCount(): Int {
-//        return newsList?.size?: 0
-//    }
-
-//    fun submitNews(news: List<News>) {
-//        this.newsList = news
-//        notifyDataSetChanged()
-//    }
 }
 
