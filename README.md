@@ -2,10 +2,12 @@
 
 ## Purpose
 1. Efficient
+
 Infinitely scroll only download partial data and then load more data on demand when the scroll reaches the bottom.
 <img src=https://github.com/yining24/Coding_Test/blob/master/demo.png width="250"/>
 
 2. Android Architecture : Handle NetWork + Database
+
 Here we download data through retrofit first, and save data lists in the database.
 In order to drive UI from model, we create live data which is getting from database and observed by View.
 
